@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "home": "Piso Prats",
+  "people": [
+    {
+      "id": "ferran",
+      "name": "Ferran",
+      "color": "#2a78d6"
+    },
+    {
+      "id": "jimmy",
+      "name": "Jimmy",
+      "color": "#eb6834"
+    },
+    {
+      "id": "mel",
+      "name": "Mel",
+      "color": "#1baf7a"
+    }
+  ],
+  "cleaning": {
+    "zones": [
+      {
+        "id": "bano",
+        "name": "Baño"
+      },
+      {
+        "id": "cocina",
+        "name": "Cocina"
+      },
+      {
+        "id": "salon",
+        "name": "Salón y suelo"
+      }
+    ],
+    "shifts": [
+      {
+        "id": "t1",
+        "label": "Primer turno",
+        "days": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "id": "t2",
+        "label": "Segundo turno",
+        "days": [
+          5,
+          6,
+          7
+        ]
+      }
+    ],
+    "rotation": [
+      "ferran",
+      "jimmy",
+      "mel"
+    ],
+    "anchorWeek": "2026-W34"
+  },
+  "completions": [],
+  "shopping": [],
+  "tricount": {
+    "url": "https://tricount.com/tqQWpYEJCYRhBwPzjJ",
+    "appInstallationId": "f5799d66-fb73-4e46-8145-23c0185f5e22",
+    "lastSync": "2026-08-27T16:21:47.412Z",
+    "status": "ok",
+    "error": null,
+    "members": {
+      "Ferran": "495900822",
+      "Mel 🌸": "497958668",
+      "j": "498137185"
+    },
+    "balances": [
+      {
+        "person": "Ferran",
+        "paid": 3.5,
+        "share": 5.77,
+        "amount": -2.27
+      },
+      {
+        "person": "Mel 🌸",
+        "paid": 8.05,
+        "share": 5.78,
+        "amount": 2.27
+      },
+      {
+        "person": "j",
+        "paid": 0,
+        "share": 0,
+        "amount": 0
+      }
+    ],
+    "expenses": [
+      {
+        "date": "2026-08-20",
+        "title": "Separador cubiertos +mantel",
+        "category": "UNCATEGORIZED",
+        "paidBy": "Ferran",
+        "amount": 3.5,
+        "currency": "EUR"
+      },
+      {
+        "date": "2026-08-20",
+        "title": "Compra de la casa",
+        "category": "UNCATEGORIZED",
+        "paidBy": "Mel 🌸",
+        "amount": 8.05,
+        "currency": "EUR"
+      }
+    ],
+    "total": 11.55,
+    "title": "Piso prats 🦦🏅",
+    "currency": "EUR"
+  }
+}

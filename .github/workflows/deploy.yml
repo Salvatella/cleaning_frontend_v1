@@ -1,0 +1,63 @@
+name: Deploy a GitHub Pages
+
+# Publica la web estática: compila el frontend (web/dist) y lo sube junto con
+# la carpeta snapshots/ (los meses cerrados y los gastos congelados).
+#
+# La app usa HashRouter y base: './', así que funciona bajo /usuario/repo/ sin
+# tocar nada. Los datos en vivo salen de Supabase (config.js), no del build.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # permite lanzarlo a mano desde la pestaña Actions
+
+# Permisos mínimos para publicar en Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un solo deploy a la vez; no cancela el que esté en curso.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # Monta el sitio: el contenido de web/dist en la raíz, y snapshots/ al
+      # lado de index.html (la app los pide como 'snapshots/xxxx.json').
+      - name: Ensamblar el sitio
+        run: |
+          mkdir -p _site
+          cp -r web/dist/. _site/
+          if [ -d snapshots ]; then
+            mkdir -p _site/snapshots
+            cp -r snapshots/. _site/snapshots/
+          fi
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

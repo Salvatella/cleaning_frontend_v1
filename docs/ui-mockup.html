@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Piso · Cleaning Service — Mockup UI</title>
+<style>
+  :root{
+    --surface-1:#fcfcfb; --page:#f9f9f7;
+    --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+    --grid:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,.10);
+    --ferran:#2a78d6; --jimmy:#eb6834; --mel:#1baf7a;
+    --good:#0ca30c; --warning:#fab219; --critical:#d03b3b;
+    --sidebar:#16171a;
+    --r:10px;
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--ink);font-size:14px;line-height:1.45}
+  .app{display:grid;grid-template-columns:224px 1fr;min-height:100vh}
+
+  /* ---------- Sidebar ---------- */
+  aside{background:var(--sidebar);color:#e9e9e6;padding:20px 12px;display:flex;flex-direction:column;gap:24px}
+  .brand{display:flex;align-items:center;gap:10px;padding:0 8px}
+  .brand-dot{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--ferran),var(--mel));flex:none}
+  .brand b{font-size:14px;letter-spacing:-.01em}
+  .brand small{display:block;color:#8b8b87;font-size:11px;font-weight:400}
+  nav{display:flex;flex-direction:column;gap:2px}
+  .navlabel{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#6f6f6b;padding:0 8px 6px}
+  nav button{all:unset;display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;color:#b6b6b1;font-size:13px}
+  nav button:hover{background:#232428;color:#e9e9e6}
+  nav button[aria-current="page"]{background:#2a2c31;color:#fff;font-weight:500}
+  nav button .ic{width:16px;text-align:center;opacity:.9}
+  .navbadge{margin-left:auto;background:var(--critical);color:#fff;font-size:10px;font-weight:600;border-radius:99px;padding:1px 6px}
+  .who{margin-top:auto;border-top:1px solid #2a2c31;padding-top:14px;display:flex;align-items:center;gap:9px;padding-left:8px}
+  .who .av{width:26px;height:26px;border-radius:99px;background:var(--ferran);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:600}
+  .who span{font-size:12px;color:#b6b6b1}
+
+  /* ---------- Layout ---------- */
+  main{padding:26px 30px 44px;max-width:1180px}
+  .head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:20px}
+  h1{font-size:21px;margin:0 0 3px;letter-spacing:-.02em}
+  .sub{color:var(--ink-2);font-size:13px;margin:0}
+  .btn{border:1px solid var(--ring);background:var(--surface-1);border-radius:8px;padding:7px 12px;font-size:13px;cursor:pointer;color:var(--ink)}
+  .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .card{background:var(--surface-1);border:1px solid var(--ring);border-radius:var(--r);padding:16px 18px}
+  .card h2{font-size:13px;margin:0 0 2px;letter-spacing:-.01em}
+  .card .cap{font-size:11.5px;color:var(--muted);margin:0 0 14px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-top:12px}
+
+  /* ---------- Stat tiles ---------- */
+  .tile .lbl{font-size:11.5px;color:var(--muted);margin:0 0 6px;text-transform:uppercase;letter-spacing:.05em}
+  .tile .val{font-size:30px;font-weight:600;letter-spacing:-.03em;line-height:1}
+  .tile .delta{font-size:12px;margin-top:7px;color:var(--ink-2);display:flex;align-items:center;gap:5px}
+  .up{color:#006300;font-weight:600}.down{color:var(--critical);font-weight:600}
+
+  /* ---------- Bars ---------- */
+  .barrow{display:grid;grid-template-columns:64px 1fr 44px;align-items:center;gap:10px;margin-bottom:11px}
+  .barrow .nm{font-size:12.5px;color:var(--ink-2)}
+  .track{height:10px;background:#f0efec;border-radius:5px;overflow:hidden}
+  .fill{height:100%;border-radius:5px}
+  .barrow .pct{font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
+
+  /* ---------- Sparkline legend ---------- */
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--ink-2)}
+  .legend i{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:-1px}
+
+  /* ---------- Tables ---------- */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:500;padding:0 8px 8px}
+  td{padding:11px 8px;border-top:1px solid var(--grid)}
+  .person{display:flex;align-items:center;gap:8px;font-weight:500}
+  .dot{width:8px;height:8px;border-radius:99px;flex:none}
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;border-radius:99px;padding:3px 9px;border:1px solid var(--ring)}
+  .pill.ok{color:#0a7a0a;background:#eaf7ea;border-color:#c6e8c6}
+  .pill.pend{color:#8a6100;background:#fdf4e0;border-color:#f4e2b8}
+  .pill.late{color:#a82d2d;background:#fbecec;border-color:#f2cccc}
+
+  /* ---------- Horario grid ---------- */
+  .cal{display:grid;grid-template-columns:150px repeat(7,1fr);gap:4px;font-size:12px}
+  .cal .h{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:center;padding-bottom:4px}
+  .cal .task{display:flex;align-items:center;gap:8px;padding:10px 2px;font-weight:500}
+  .cell{height:40px;border-radius:7px;background:#f4f3f0;display:grid;place-items:center;color:transparent}
+  .cell.on{color:#fff;font-size:11px;font-weight:600}
+  .cell.today{outline:2px solid var(--ink);outline-offset:1px}
+
+  /* ---------- Checklist ---------- */
+  .chk{display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px solid var(--grid)}
+  .box{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--axis);flex:none;display:grid;place-items:center;cursor:pointer;background:#fff}
+  .box.done{background:var(--good);border-color:var(--good);color:#fff;font-size:12px}
+  .chk .t{flex:1}
+  .chk .t b{display:block;font-size:13.5px;font-weight:500}
+  .chk .t span{font-size:11.5px;color:var(--muted)}
+
+  /* ---------- Shopping ---------- */
+  .additem{display:flex;gap:8px;margin-bottom:6px}
+  .additem input{flex:1;border:1px solid var(--ring);border-radius:8px;padding:8px 11px;font-size:13px;font-family:inherit;background:#fff}
+  .item{display:flex;align-items:center;gap:11px;padding:10px 0;border-top:1px solid var(--grid)}
+  .item .nm{flex:1;font-size:13.5px}
+  .item .by{font-size:11px;color:var(--muted)}
+  .item.bought .nm{text-decoration:line-through;color:var(--muted)}
+  .bal{display:flex;align-items:center;gap:10px;padding:12px 0;border-top:1px solid var(--grid)}
+  .bal .nm{width:62px;font-size:13px;font-weight:500}
+  .balbar{flex:1;height:26px;position:relative}
+  .balbar .zero{position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;background:var(--axis)}
+  .balbar .b{position:absolute;top:5px;height:16px;border-radius:4px}
+  .bal .amt{width:74px;text-align:right;font-size:13px;font-variant-numeric:tabular-nums;font-weight:600}
+  .settle{background:#f4f3f0;border-radius:8px;padding:11px 13px;margin-top:14px;font-size:12.5px;color:var(--ink-2);line-height:1.7}
+  .sync{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:6px}
+
+  .page{display:none}.page.active{display:block}
+  .mt{margin-top:12px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<aside>
+  <div class="brand">
+    <div class="brand-dot"></div>
+    <div><b>Casa</b><small>C/ Exemple 12, 3º2ª</small></div>
+  </div>
+
+  <nav>
+    <div class="navlabel">Piso</div>
+    <button data-go="dash" aria-current="page"><span class="ic">◧</span> Dashboard</button>
+    <button data-go="horario"><span class="ic">▦</span> Horario</button>
+    <button data-go="estado"><span class="ic">✓</span> Esta semana <span class="navbadge">2</span></button>
+    <button data-go="compra"><span class="ic">🛒</span> Compra y gastos</button>
+  </nav>
+
+  <div class="who">
+    <div class="av">F</div>
+    <span>Ferran · Jimmy · Mel</span>
+  </div>
+</aside>
+
+<main>
+
+<!-- ============ DASHBOARD ============ -->
+<section class="page active" id="dash">
+  <div class="head">
+    <div>
+      <h1>Dashboard</h1>
+      <p class="sub">Semana 34 · 17 – 23 de agosto</p>
+    </div>
+    <button class="btn">Últimas 8 semanas ▾</button>
+  </div>
+
+  <div class="grid4">
+    <div class="card tile">
+      <p class="lbl">Cumplimiento</p>
+      <div class="val">86<span style="font-size:18px;color:var(--muted)">%</span></div>
+      <div class="delta"><span class="up">▲ 9 pts</span> vs semana pasada</div>
+    </div>
+    <div class="card tile">
+      <p class="lbl">Tareas hechas</p>
+      <div class="val">7<span style="font-size:18px;color:var(--muted)">/9</span></div>
+      <div class="delta">2 pendientes esta semana</div>
+    </div>
+    <div class="card tile">
+      <p class="lbl">Con retraso</p>
+      <div class="val" style="color:var(--critical)">1</div>
+      <div class="delta">Salón · Jimmy · 2 días</div>
+    </div>
+    <div class="card tile">
+      <p class="lbl">Mejor racha</p>
+      <div class="val">5</div>
+      <div class="delta">semanas seguidas · Mel</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>Cumplimiento por persona</h2>
+      <p class="cap">% de tareas completadas a tiempo · últimas 8 semanas</p>
+      <div class="barrow">
+        <div class="nm"><span class="dot" style="background:var(--mel);display:inline-block;margin-right:6px"></span>Mel</div>
+        <div class="track"><div class="fill" style="width:96%;background:var(--mel)"></div></div>
+        <div class="pct">96%</div>
+      </div>
+      <div class="barrow">
+        <div class="nm"><span class="dot" style="background:var(--ferran);display:inline-block;margin-right:6px"></span>Ferran</div>
+        <div class="track"><div class="fill" style="width:88%;background:var(--ferran)"></div></div>
+        <div class="pct">88%</div>
+      </div>
+      <div class="barrow">
+        <div class="nm"><span class="dot" style="background:var(--jimmy);display:inline-block;margin-right:6px"></span>Jimmy</div>
+        <div class="track"><div class="fill" style="width:74%;background:var(--jimmy)"></div></div>
+        <div class="pct">74%</div>
+      </div>
+
+      <h2 style="margin-top:22px">Tendencia semanal</h2>
+      <p class="cap">% del piso completado, semana a semana</p>
+      <svg viewBox="0 0 460 120" width="100%" height="120" role="img" aria-label="Tendencia de cumplimiento semanal">
+        <line x1="0" y1="20" x2="460" y2="20" stroke="#e1e0d9" stroke-width="1"/>
+        <line x1="0" y1="60" x2="460" y2="60" stroke="#e1e0d9" stroke-width="1"/>
+        <line x1="0" y1="100" x2="460" y2="100" stroke="#c3c2b7" stroke-width="1"/>
+        <polyline fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"
+          points="10,72 74,58 138,80 202,44 266,52 330,36 394,40 450,28"/>
+        <circle cx="450" cy="28" r="4.5" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+        <text x="440" y="16" font-size="11" fill="#0b0b0b" text-anchor="end" font-weight="600">86%</text>
+        <text x="10" y="115" font-size="10" fill="#898781">S27</text>
+        <text x="450" y="115" font-size="10" fill="#898781" text-anchor="end">S34</text>
+      </svg>
+    </div>
+
+    <div class="card">
+      <h2>Zonas más olvidadas</h2>
+      <p class="cap">Veces saltada · últimas 8 semanas</p>
+      <div class="barrow"><div class="nm">Salón</div><div class="track"><div class="fill" style="width:100%;background:#9ec5f4"></div></div><div class="pct">6</div></div>
+      <div class="barrow"><div class="nm">Basura</div><div class="track"><div class="fill" style="width:66%;background:#b7d3f6"></div></div><div class="pct">4</div></div>
+      <div class="barrow"><div class="nm">Baño</div><div class="track"><div class="fill" style="width:33%;background:#cde2fb"></div></div><div class="pct">2</div></div>
+      <div class="barrow"><div class="nm">Cocina</div><div class="track"><div class="fill" style="width:17%;background:#cde2fb"></div></div><div class="pct">1</div></div>
+
+      <h2 style="margin-top:22px">Gastos del mes</h2>
+      <p class="cap">Sincronizado desde Tricount</p>
+      <div class="val" style="font-size:26px;font-weight:600;letter-spacing:-.03em">312,40 €</div>
+      <div class="delta" style="font-size:12px;color:var(--ink-2);margin-top:6px">Ferran ha adelantado <b>+64,10 €</b></div>
+      <div class="sync mt">◷ Última sync: hace 12 min</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HORARIO ============ -->
+<section class="page" id="horario">
+  <div class="head">
+    <div>
+      <h1>Horario</h1>
+      <p class="sub">Qué le toca a cada uno y qué días tiene para hacerlo</p>
+    </div>
+    <button class="btn primary">Editar horario</button>
+  </div>
+
+  <div class="card">
+    <div class="cal">
+      <div></div>
+      <div class="h">Lun</div><div class="h">Mar</div><div class="h">Mié</div><div class="h">Jue</div><div class="h">Vie</div><div class="h">Sáb</div><div class="h">Dom</div>
+
+      <div class="task"><span class="dot" style="background:var(--ferran)"></span>Baño</div>
+      <div class="cell on" style="background:var(--ferran)">F</div>
+      <div class="cell on today" style="background:var(--ferran)">F</div>
+      <div class="cell on" style="background:var(--ferran)">F</div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+
+      <div class="task"><span class="dot" style="background:var(--jimmy)"></span>Salón y suelo</div>
+      <div class="cell"></div>
+      <div class="cell on today" style="background:var(--jimmy)">J</div>
+      <div class="cell on" style="background:var(--jimmy)">J</div>
+      <div class="cell on" style="background:var(--jimmy)">J</div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+
+      <div class="task"><span class="dot" style="background:var(--mel)"></span>Cocina</div>
+      <div class="cell"></div><div class="cell today"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell on" style="background:var(--mel)">M</div>
+      <div class="cell on" style="background:var(--mel)">M</div>
+      <div class="cell on" style="background:var(--mel)">M</div>
+
+      <div class="task"><span class="dot" style="background:var(--ink-2)"></span>Basura</div>
+      <div class="cell on" style="background:var(--ferran)">F</div>
+      <div class="cell today"></div>
+      <div class="cell on" style="background:var(--jimmy)">J</div>
+      <div class="cell"></div>
+      <div class="cell on" style="background:var(--mel)">M</div>
+      <div class="cell"></div>
+      <div class="cell on" style="background:var(--ferran)">F</div>
+    </div>
+
+    <div class="legend">
+      <span><i style="background:var(--ferran)"></i>Ferran</span>
+      <span><i style="background:var(--jimmy)"></i>Jimmy</span>
+      <span><i style="background:var(--mel)"></i>Mel</span>
+      <span style="color:var(--muted)">Recuadro negro = hoy (martes)</span>
+    </div>
+  </div>
+
+  <div class="card mt">
+    <h2>Reparto</h2>
+    <p class="cap">El horario rota cada 4 semanas</p>
+    <table>
+      <thead><tr><th>Persona</th><th>Zona</th><th>Días disponibles</th><th>Frecuencia</th></tr></thead>
+      <tbody>
+        <tr><td><div class="person"><span class="dot" style="background:var(--ferran)"></span>Ferran</div></td><td>Baño</td><td>Lun · Mar · Mié</td><td>1× semana</td></tr>
+        <tr><td><div class="person"><span class="dot" style="background:var(--jimmy)"></span>Jimmy</div></td><td>Salón y suelo</td><td>Mar · Mié · Jue</td><td>1× semana</td></tr>
+        <tr><td><div class="person"><span class="dot" style="background:var(--mel)"></span>Mel</div></td><td>Cocina</td><td>Vie · Sáb · Dom</td><td>1× semana</td></tr>
+        <tr><td><div class="person"><span class="dot" style="background:var(--ink-2)"></span>Rotativo</div></td><td>Basura</td><td>Lun · Mié · Vie · Dom</td><td>4× semana</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ ESTADO ============ -->
+<section class="page" id="estado">
+  <div class="head">
+    <div>
+      <h1>Esta semana</h1>
+      <p class="sub">Marca lo que hayas hecho · quedan 2 tareas y 1 va con retraso</p>
+    </div>
+    <button class="btn">Ver semanas anteriores</button>
+  </div>
+
+  <div class="grid2" style="grid-template-columns:1fr 1fr">
+    <div class="card">
+      <h2>Pendiente</h2>
+      <p class="cap">Ordenado por urgencia</p>
+
+      <div class="chk">
+        <div class="box"></div>
+        <div class="t"><b>Salón y suelo</b><span>Jimmy · tenía hasta el jueves</span></div>
+        <span class="pill late">● 2 días tarde</span>
+      </div>
+      <div class="chk">
+        <div class="box"></div>
+        <div class="t"><b>Cocina</b><span>Mel · vie–dom</span></div>
+        <span class="pill pend">◷ Pendiente</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Hecho</h2>
+      <p class="cap">7 tareas completadas</p>
+
+      <div class="chk">
+        <div class="box done">✓</div>
+        <div class="t"><b>Baño</b><span>Ferran · lunes 20:15</span></div>
+        <span class="pill ok">✓ A tiempo</span>
+      </div>
+      <div class="chk">
+        <div class="box done">✓</div>
+        <div class="t"><b>Basura</b><span>Ferran · lunes 09:02</span></div>
+        <span class="pill ok">✓ A tiempo</span>
+      </div>
+      <div class="chk">
+        <div class="box done">✓</div>
+        <div class="t"><b>Basura</b><span>Jimmy · miércoles 21:40</span></div>
+        <span class="pill ok">✓ A tiempo</span>
+      </div>
+      <div class="chk" style="opacity:.55">
+        <div class="box done">✓</div>
+        <div class="t"><b>+ 4 más</b><span>semana anterior incluida</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt">
+    <h2>Historial</h2>
+    <p class="cap">Últimas 4 semanas</p>
+    <table>
+      <thead><tr><th>Semana</th><th>Ferran</th><th>Jimmy</th><th>Mel</th><th>Total piso</th></tr></thead>
+      <tbody>
+        <tr><td>S34 (actual)</td><td><span class="pill ok">✓ 2/2</span></td><td><span class="pill late">● 1/2</span></td><td><span class="pill pend">◷ 1/2</span></td><td>86%</td></tr>
+        <tr><td>S33</td><td><span class="pill ok">✓ 2/2</span></td><td><span class="pill ok">✓ 2/2</span></td><td><span class="pill ok">✓ 2/2</span></td><td>100%</td></tr>
+        <tr><td>S32</td><td><span class="pill late">● 1/2</span></td><td><span class="pill ok">✓ 2/2</span></td><td><span class="pill ok">✓ 2/2</span></td><td>83%</td></tr>
+        <tr><td>S31</td><td><span class="pill ok">✓ 2/2</span></td><td><span class="pill late">● 0/2</span></td><td><span class="pill ok">✓ 2/2</span></td><td>67%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ COMPRA ============ -->
+<section class="page" id="compra">
+  <div class="head">
+    <div>
+      <h1>Compra y gastos</h1>
+      <p class="sub">Lista común del piso · balances desde Tricount</p>
+    </div>
+    <button class="btn">↻ Sincronizar Tricount</button>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>Lista de la compra</h2>
+      <p class="cap">4 pendientes · lo que compres se marca y ya</p>
+      <div class="additem">
+        <input placeholder="Añadir producto…">
+        <button class="btn primary">Añadir</button>
+      </div>
+      <div class="item"><div class="box"></div><div class="nm">Papel de cocina</div><div class="by">añadió Mel</div></div>
+      <div class="item"><div class="box"></div><div class="nm">Detergente lavadora</div><div class="by">añadió Ferran</div></div>
+      <div class="item"><div class="box"></div><div class="nm">Bolsas de basura</div><div class="by">añadió Jimmy</div></div>
+      <div class="item"><div class="box"></div><div class="nm">Lejía y estropajos</div><div class="by">añadió Ferran</div></div>
+      <div class="item bought"><div class="box done">✓</div><div class="nm">Leche ×6</div><div class="by">Mel · 8,40 €</div></div>
+      <div class="item bought"><div class="box done">✓</div><div class="nm">Café</div><div class="by">Ferran · 12,90 €</div></div>
+    </div>
+
+    <div class="card">
+      <h2>Balance del piso</h2>
+      <p class="cap">Agosto · 312,40 € en total</p>
+
+      <div class="bal">
+        <div class="nm">Ferran</div>
+        <div class="balbar"><div class="zero"></div><div class="b" style="left:50%;width:32%;background:var(--ferran)"></div></div>
+        <div class="amt" style="color:#006300">+64,10 €</div>
+      </div>
+      <div class="bal">
+        <div class="nm">Mel</div>
+        <div class="balbar"><div class="zero"></div><div class="b" style="left:50%;width:9%;background:var(--mel)"></div></div>
+        <div class="amt" style="color:#006300">+18,30 €</div>
+      </div>
+      <div class="bal">
+        <div class="nm">Jimmy</div>
+        <div class="balbar"><div class="zero"></div><div class="b" style="left:9%;width:41%;background:var(--jimmy)"></div></div>
+        <div class="amt" style="color:var(--critical)">−82,40 €</div>
+      </div>
+
+      <div class="settle">
+        <b>Para saldar cuentas</b><br>
+        Jimmy → Ferran &nbsp;<b>64,10 €</b><br>
+        Jimmy → Mel &nbsp;<b>18,30 €</b>
+      </div>
+
+      <div class="sync mt">◷ Última sync con Tricount: hace 12 min · solo lectura</div>
+    </div>
+  </div>
+
+  <div class="card mt">
+    <h2>Últimos gastos</h2>
+    <p class="cap">Importados de Tricount</p>
+    <table>
+      <thead><tr><th>Fecha</th><th>Concepto</th><th>Pagó</th><th style="text-align:right">Importe</th></tr></thead>
+      <tbody>
+        <tr><td>16 ago</td><td>Compra semanal Mercadona</td><td><div class="person"><span class="dot" style="background:var(--ferran)"></span>Ferran</div></td><td style="text-align:right;font-variant-numeric:tabular-nums">78,20 €</td></tr>
+        <tr><td>14 ago</td><td>Productos de limpieza</td><td><div class="person"><span class="dot" style="background:var(--mel)"></span>Mel</div></td><td style="text-align:right;font-variant-numeric:tabular-nums">23,15 €</td></tr>
+        <tr><td>11 ago</td><td>Recibo internet</td><td><div class="person"><span class="dot" style="background:var(--ferran)"></span>Ferran</div></td><td style="text-align:right;font-variant-numeric:tabular-nums">42,00 €</td></tr>
+        <tr><td>9 ago</td><td>Cena piso</td><td><div class="person"><span class="dot" style="background:var(--jimmy)"></span>Jimmy</div></td><td style="text-align:right;font-variant-numeric:tabular-nums">31,50 €</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+  const btns = document.querySelectorAll('nav button');
+  btns.forEach(b => b.addEventListener('click', () => {
+    btns.forEach(x => x.removeAttribute('aria-current'));
+    b.setAttribute('aria-current','page');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(b.dataset.go).classList.add('active');
+    window.scrollTo(0,0);
+  }));
+  document.querySelectorAll('.box').forEach(x => x.addEventListener('click', () => {
+    x.classList.toggle('done');
+    x.textContent = x.classList.contains('done') ? '✓' : '';
+  }));
+</script>
+</body>
+</html>

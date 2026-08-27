@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "home": "Piso Prats",
+  "people": [
+    {
+      "id": "ferran",
+      "name": "Ferran",
+      "color": "#2a78d6"
+    },
+    {
+      "id": "jimmy",
+      "name": "Jimmy",
+      "color": "#eb6834"
+    },
+    {
+      "id": "mel",
+      "name": "Mel",
+      "color": "#1baf7a"
+    }
+  ],
+  "cleaning": {
+    "zones": [
+      {
+        "id": "bano",
+        "name": "Baño"
+      },
+      {
+        "id": "cocina",
+        "name": "Cocina"
+      },
+      {
+        "id": "salon",
+        "name": "Salón y suelo"
+      }
+    ],
+    "shifts": [
+      {
+        "id": "t1",
+        "label": "Primer turno",
+        "days": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "id": "t2",
+        "label": "Segundo turno",
+        "days": [
+          5,
+          6,
+          7
+        ]
+      }
+    ],
+    "rotation": [
+      "ferran",
+      "jimmy",
+      "mel"
+    ],
+    "anchorWeek": "2026-W34"
+  },
+  "completions": [],
+  "shopping": [],
+  "tricount": {
+    "url": "",
+    "appInstallationId": null,
+    "lastSync": null,
+    "status": "never",
+    "error": null,
+    "members": {},
+    "balances": [],
+    "expenses": [],
+    "total": 0
+  }
+}
