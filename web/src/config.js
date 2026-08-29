@@ -1,16 +1,19 @@
 /**
  * web/src/config.js — configuración del frontend.
  *
- * La clave `anon` de Supabase está DISEÑADA para ir aquí, a la vista. No es un
- * secreto: lo que protege los datos son las reglas RLS de supabase/schema.sql.
- * La otra clave, la `service_role`, esa nunca debe aparecer en el frontend.
+ * La clave publishable está DISEÑADA para ir aquí, a la vista, y puede subirse
+ * a un repo público sin problema. No es un secreto: lo que protege los datos
+ * son las reglas RLS de supabase/schema.sql.
  *
- * Rellena estos dos valores con los de tu proyecto:
- *   Supabase → Project Settings → Data API → Project URL
- *   Supabase → Project Settings → API Keys → anon / publishable
+ * La otra clave, la `secret` / `service_role`, salta todas esas reglas y NUNCA
+ * debe aparecer en el frontend ni en el repo.
+ *
+ * Dónde salen estos valores:
+ *   Supabase → Settings → Data API      → Project URL
+ *   Supabase → Settings → API Keys      → Publishable key (sb_publishable_...)
  */
-export const SUPABASE_URL = '';
-export const SUPABASE_ANON_KEY = '';
+export const SUPABASE_URL = 'https://auwfxgddhhuaenxyagoe.supabase.co';
+export const SUPABASE_ANON_KEY = 'sb_publishable_4nw8s_RO9eBVegqUJ3bAHg_FQkFu8Oj';
 
 /** Con esto vacío la app arranca en modo local (contra el Express de siempre). */
 export const useSupabase = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);

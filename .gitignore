@@ -1,8 +1,19 @@
 node_modules/
 web/dist/
-tricount-raw.json
-db.bak.json
 *.log
 .DS_Store
+
+# --- Datos del piso: NO subir al repo -------------------------------------
+# db.json lleva dentro el enlace del Tricount, y con ese enlace cualquiera
+# puede leer vuestros gastos. db.example.json sí se sube: es la plantilla
+# vacía para arrancar de cero.
+db.json
+db.bak.json
+tricount-raw.json
+snapshots/tricount.json
+
+# --- Credenciales ---------------------------------------------------------
+# La publishable de Supabase SÍ va en web/src/config.js (es pública por
+# diseño). Lo que nunca se sube es la clave secreta ni la de Postgres.
 .env
 supabase/config.local.json
