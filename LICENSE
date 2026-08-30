@@ -1,24 +1,68 @@
-This is free and unencumbered software released into the public domain.
+Copyright (c) 2026 Ferran Salvatella Ochoa. Todos los derechos reservados.
+All Rights Reserved.
 
-Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.
+================================================================================
+ ESPAÑOL
+================================================================================
 
-In jurisdictions that recognize copyright laws, the author or authors
-of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
-successors. We intend this dedication to be an overt act of
-relinquishment in perpetuity of all present and future rights to this
-software under copyright law.
+Este software y su código fuente son propiedad exclusiva del titular del
+copyright arriba indicado.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
+NO se concede ninguna licencia ni derecho de uso. Queda expresamente prohibido,
+sin autorización previa y por escrito del titular:
 
-For more information, please refer to <https://unlicense.org>
+  - Usar el software, en todo o en parte, para cualquier fin.
+  - Copiar, reproducir o descargar el código con fines distintos a su simple
+    consulta en el repositorio donde se publica.
+  - Modificar, adaptar, traducir o crear obras derivadas.
+  - Distribuir, sublicenciar, vender, alquilar o ceder el software.
+  - Incorporarlo, total o parcialmente, en otros proyectos, sean comerciales
+    o no, abiertos o cerrados.
+
+Que este repositorio sea de acceso público NO implica autorización alguna. La
+visibilidad se ofrece únicamente a efectos de consulta y transparencia.
+
+Los nombres, marcas y servicios de terceros mencionados en el código
+(Tricount, Supabase, GitHub y cualesquiera otros) pertenecen a sus respectivos
+titulares y no guardan relación con esta licencia.
+
+EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O
+IMPLÍCITA, INCLUIDAS SIN LIMITACIÓN LAS GARANTÍAS DE COMERCIABILIDAD,
+IDONEIDAD PARA UN FIN DETERMINADO Y NO INFRACCIÓN. EN NINGÚN CASO EL TITULAR
+SERÁ RESPONSABLE DE RECLAMACIONES, DAÑOS U OTRAS RESPONSABILIDADES DERIVADAS
+DEL SOFTWARE O DE SU USO.
+
+Para solicitar permiso, contacta con el titular del copyright.
+
+================================================================================
+ ENGLISH
+================================================================================
+
+This software and its source code are the exclusive property of the copyright
+holder named above.
+
+NO license or right of use is granted. Without the prior written permission of
+the copyright holder, you may NOT:
+
+  - Use the software, in whole or in part, for any purpose.
+  - Copy, reproduce or download the code for any purpose other than simply
+    viewing it in the repository where it is published.
+  - Modify, adapt, translate or create derivative works.
+  - Distribute, sublicense, sell, rent or otherwise transfer the software.
+  - Incorporate it, in whole or in part, into any other project, whether
+    commercial or not, open or closed source.
+
+Public visibility of this repository does NOT grant any permission. It is made
+visible for reference and transparency only.
+
+Third-party names, trademarks and services referenced in the code (Tricount,
+Supabase, GitHub and any others) belong to their respective owners and are
+unrelated to this license.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING
+FROM THE SOFTWARE OR ITS USE.
+
+To request permission, contact the copyright holder.

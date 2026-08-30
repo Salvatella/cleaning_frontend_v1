@@ -153,75 +153,49 @@ Un par de detalles que evitan sorpresas:
   permite). En modo estático los gastos los genera el script mensual, que los
   deja en `snapshots/tricount.json`.
 
-## El enlace del Tricount
-
-Va en un `.env` en la raíz del proyecto, que **nunca se sube al repo**:
-
-```bash
-cp .env.example .env
-```
-
-Y dentro:
-
-```
-TRICOUNT_URL=https://tricount.com/VUESTRA_CLAVE
-```
-
-Lo leen los tres scripts (`test:tricount`, `sync`, `month_snapshot.py`), por
-este orden: argumento de línea de comandos → `TRICOUNT_URL` → `db.json`.
-
-> **Por qué esto importa.** Tricount no tiene API key: la "clave" es el trozo
-> final del enlace de invitación, y cualquiera que lo tenga puede leer vuestros
-> gastos. Si el enlace acaba en un repo público, el único arreglo es crear un
-> tricount nuevo — no se puede revocar.
->
-> Por eso `.env`, `db.json` y `snapshots/tricount.json` están en `.gitignore`,
-> y el snapshot mensual guarda los datos ya resueltos pero **no** el enlace.
-
 ## El cierre de mes
 
-Al final de cada mes se congela el mes en un fichero estático:
+Cuando quieras actualizar los gastos y congelar un mes:
 
 ```bash
-pip install -r tools/requirements.txt   # solo la primera vez
-python tools/month_snapshot.py          # el mes que acaba de terminar
+npm run snapshot
+git add snapshots/ && git commit -m "Cierre de mes" && git push
 ```
 
-Genera `snapshots/2026-06.json` con las estadísticas del mes ya calculadas y
-los gastos de Tricount de ese mes, y actualiza `snapshots/index.json`.
+El `push` dispara el workflow de GitHub Actions, que recompila y republica.
+Un minuto después la web tiene los datos nuevos.
 
-Otras formas de llamarlo:
+Por defecto congela **el mes que acaba de terminar**. Otras formas:
 
 ```bash
-python tools/month_snapshot.py --month 2026-06     # un mes concreto
-python tools/month_snapshot.py --no-tricount       # sin tocar los gastos
-python tools/month_snapshot.py --source supabase   # checks desde la nube
+npm run snapshot -- --month 2026-08    # un mes concreto
+npm run snapshot -- --this-month       # el mes en curso, tal como va
+npm run snapshot -- --no-tricount      # solo limpieza, sin tocar los gastos
+npm run snapshot -- --source db        # checks desde db.json en vez de Supabase
 ```
 
-En modo estático, el cierre de mes es `--source supabase`: lee los checks de
-Supabase, sincroniza Tricount desde tu máquina, y escribe los ficheros. Luego
-haces `git push` y GitHub Pages ya sirve el mes nuevo. Las credenciales salen
-de `SUPABASE_URL` / `SUPABASE_KEY` o de `supabase/config.local.json`
-(ignorado por git; tienes un `.example` al lado).
+Genera tres ficheros en `snapshots/`:
+
+| Fichero | Qué lleva |
+|---|---|
+| `2026-08.json` | las estadísticas de ese mes, ya calculadas |
+| `tricount.json` | balances y gastos actuales |
+| `index.json` | qué meses hay, para que el dashboard sepa navegar |
 
 Si Tricount falla, el snapshot se genera igual con los datos de limpieza — no
-se pierde el mes por un problema de red.
+se pierde el mes por un problema de red. Y el enlace del tricount **nunca** se
+escribe dentro: esos ficheros acaban publicados.
 
 ### Por qué esto importa
 
-Los snapshots son **ficheros estáticos**. Se pueden publicar en GitHub Pages
-tal cual, sin ningún servidor detrás: el dashboard los lee con un `fetch`
-normal. El servidor solo hace falta para lo que se escribe a diario (los
-checks y la lista de la compra).
+Los snapshots son **ficheros estáticos**. El dashboard los lee con un `fetch`
+normal, sin ningún servidor detrás. Solo hacen falta credenciales para
+*generarlos*, y eso ocurre en tu máquina.
 
-El servidor también los sirve en `/snapshots/*.json`, así que la misma web
-funciona igual en local y publicada.
-
-> **Ojo al mantener el código:** la lógica de turnos y estadísticas está
-> escrita **dos veces** — en `server/schedule.js` + `server/monthly.js` (para
-> el mes en curso, en vivo) y en `tools/month_snapshot.py` (para congelar).
-> Si cambias las reglas en un sitio, cámbialas en el otro. Están verificadas
-> como equivalentes: mismo reparto de turnos y mismos números para un mes dado.
+> El script reutiliza el mismo código que el frontend
+> (`web/src/lib/monthly.js` y `web/src/config.js`), así que los números del
+> mes congelado y los del mes en curso salen del mismo sitio. No hay dos
+> implementaciones que puedan desincronizarse.
 
 ## Estructura
 
@@ -243,7 +217,7 @@ snapshots/               los meses cerrados y los gastos, en ficheros estáticos
 tools/
   test-tricount.mjs      prueba de humo de la conexión
   sync-tricount.mjs      sincroniza Tricount sin arrancar el servidor
-  month_snapshot.py      cierre de mes: congela el mes en un JSON estático
+  month-snapshot.mjs     cierre de mes: congela el mes en un JSON estático
 ```
 
 ## Notas

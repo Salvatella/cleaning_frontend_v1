@@ -1,4 +1,0 @@
-# Dependencias del script mensual (tools/month_snapshot.py)
-#   pip install -r tools/requirements.txt
-requests>=2.32
-cryptography>=42.0

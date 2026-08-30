@@ -10,8 +10,8 @@
     "dev:web": "vite --config web/vite.config.js",
     "build": "vite build --config web/vite.config.js",
     "start": "node server/index.js",
-    "test:tricount": "node tools/test-tricount.mjs",
-    "sync": "node tools/sync-tricount.mjs"
+    "snapshot": "node tools/month-snapshot.mjs",
+    "test:tricount": "node tools/test-tricount.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",
