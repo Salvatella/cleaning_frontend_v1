@@ -1,0 +1,211 @@
+{
+  "month": "2026-07",
+  "title": "Dashboard de Julio 2026",
+  "generatedAt": "2026-08-30T18:19:33.552Z",
+  "live": false,
+  "people": [
+    {
+      "id": "ferran",
+      "name": "Ferran",
+      "color": "#2a78d6"
+    },
+    {
+      "id": "jimmy",
+      "name": "Jimmy",
+      "color": "#eb6834"
+    },
+    {
+      "id": "mel",
+      "name": "Mel",
+      "color": "#1baf7a"
+    }
+  ],
+  "cleaning": {
+    "zones": [
+      {
+        "id": "bano",
+        "name": "Baño"
+      },
+      {
+        "id": "cocina",
+        "name": "Cocina"
+      },
+      {
+        "id": "salon",
+        "name": "Salón y suelo"
+      }
+    ],
+    "shifts": [
+      {
+        "id": "t1",
+        "label": "Primer turno",
+        "days": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "id": "t2",
+        "label": "Segundo turno",
+        "days": [
+          5,
+          6,
+          7
+        ]
+      }
+    ]
+  },
+  "stats": {
+    "weeks": 4,
+    "total": 24,
+    "done": 0,
+    "pct": 0,
+    "turns": 8,
+    "turnsComplete": 0,
+    "perPerson": [
+      {
+        "id": "ferran",
+        "name": "Ferran",
+        "color": "#2a78d6",
+        "zones": 9,
+        "done": 0,
+        "onTime": 0,
+        "pct": 0,
+        "turns": 3,
+        "turnsComplete": 0
+      },
+      {
+        "id": "jimmy",
+        "name": "Jimmy",
+        "color": "#eb6834",
+        "zones": 9,
+        "done": 0,
+        "onTime": 0,
+        "pct": 0,
+        "turns": 3,
+        "turnsComplete": 0
+      },
+      {
+        "id": "mel",
+        "name": "Mel",
+        "color": "#1baf7a",
+        "zones": 6,
+        "done": 0,
+        "onTime": 0,
+        "pct": 0,
+        "turns": 2,
+        "turnsComplete": 0
+      }
+    ],
+    "perWeek": [
+      {
+        "week": "2026-W28",
+        "total": 6,
+        "done": 0,
+        "pct": 0,
+        "turns": [
+          {
+            "assignee": "ferran",
+            "label": "Primer turno",
+            "done": 0,
+            "total": 3
+          },
+          {
+            "assignee": "jimmy",
+            "label": "Segundo turno",
+            "done": 0,
+            "total": 3
+          }
+        ],
+        "resting": [
+          "mel"
+        ]
+      },
+      {
+        "week": "2026-W29",
+        "total": 6,
+        "done": 0,
+        "pct": 0,
+        "turns": [
+          {
+            "assignee": "mel",
+            "label": "Primer turno",
+            "done": 0,
+            "total": 3
+          },
+          {
+            "assignee": "ferran",
+            "label": "Segundo turno",
+            "done": 0,
+            "total": 3
+          }
+        ],
+        "resting": [
+          "jimmy"
+        ]
+      },
+      {
+        "week": "2026-W30",
+        "total": 6,
+        "done": 0,
+        "pct": 0,
+        "turns": [
+          {
+            "assignee": "jimmy",
+            "label": "Primer turno",
+            "done": 0,
+            "total": 3
+          },
+          {
+            "assignee": "mel",
+            "label": "Segundo turno",
+            "done": 0,
+            "total": 3
+          }
+        ],
+        "resting": [
+          "ferran"
+        ]
+      },
+      {
+        "week": "2026-W31",
+        "total": 6,
+        "done": 0,
+        "pct": 0,
+        "turns": [
+          {
+            "assignee": "ferran",
+            "label": "Primer turno",
+            "done": 0,
+            "total": 3
+          },
+          {
+            "assignee": "jimmy",
+            "label": "Segundo turno",
+            "done": 0,
+            "total": 3
+          }
+        ],
+        "resting": [
+          "mel"
+        ]
+      }
+    ],
+    "skippedZones": [
+      {
+        "zone": "Baño",
+        "count": 8
+      },
+      {
+        "zone": "Cocina",
+        "count": 8
+      },
+      {
+        "zone": "Salón y suelo",
+        "count": 8
+      }
+    ]
+  },
+  "tricount": null
+}

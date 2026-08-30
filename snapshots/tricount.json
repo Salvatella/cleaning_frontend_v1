@@ -1,0 +1,61 @@
+{
+  "url": "",
+  "title": "Piso Pratsss",
+  "currency": "EUR",
+  "lastSync": "2026-08-30T18:19:33.454Z",
+  "status": "ok",
+  "balances": [
+    {
+      "person": "Ferran Salvatella",
+      "paid": 67.5,
+      "share": 37.92,
+      "amount": 29.58
+    },
+    {
+      "person": "Miel",
+      "paid": 8.35,
+      "share": 37.93,
+      "amount": -29.58
+    },
+    {
+      "person": "Jing",
+      "paid": 0,
+      "share": 0,
+      "amount": 0
+    }
+  ],
+  "settlements": [
+    {
+      "from": "Miel",
+      "to": "Ferran Salvatella",
+      "amount": 29.58
+    }
+  ],
+  "expenses": [
+    {
+      "date": "2026-08-30",
+      "title": "Sushi + cafe",
+      "category": "UNCATEGORIZED",
+      "paidBy": "Ferran Salvatella",
+      "amount": 64,
+      "currency": "EUR"
+    },
+    {
+      "date": "2026-08-26",
+      "title": "Compra comida casa",
+      "category": "FOOD_AND_DRINK",
+      "paidBy": "Miel",
+      "amount": 8.35,
+      "currency": "EUR"
+    },
+    {
+      "date": "2026-08-25",
+      "title": "Separador cubiertos +mantel",
+      "category": "UNCATEGORIZED",
+      "paidBy": "Ferran Salvatella",
+      "amount": 3.5,
+      "currency": "EUR"
+    }
+  ],
+  "total": 75.85
+}
