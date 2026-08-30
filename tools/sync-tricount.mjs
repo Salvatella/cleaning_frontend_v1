@@ -14,12 +14,22 @@ import { randomUUID } from 'node:crypto';
 import * as db from '../server/db.js';
 import { fetchTricount, settle } from '../server/tricount.js';
 
+// Carga el .env si existe (Node 20.6+). Una variable de entorno real gana.
+try {
+  process.loadEnvFile?.(new URL('../.env', import.meta.url));
+} catch {
+  /* no hay .env: seguimos con el argumento o con db.json */
+}
+
 const urlArg = process.argv.slice(2).find((a) => !a.startsWith('-'));
 const current = db.read();
-const url = urlArg || current.tricount?.url;
+
+// Orden: argumento → TRICOUNT_URL del .env → db.json (compatibilidad).
+const url = urlArg || process.env.TRICOUNT_URL || current.tricount?.url;
 
 if (!url) {
-  console.error('❌ No hay URL de Tricount. Pásala como argumento o ponla en db.json.');
+  console.error('❌ No hay URL de Tricount. Ponla en .env como TRICOUNT_URL,');
+  console.error('   o pásala como argumento:');
   console.error('   npm run sync -- "https://tricount.com/VUESTRA_CLAVE"');
   process.exit(1);
 }

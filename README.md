@@ -153,6 +153,31 @@ Un par de detalles que evitan sorpresas:
   permite). En modo estático los gastos los genera el script mensual, que los
   deja en `snapshots/tricount.json`.
 
+## El enlace del Tricount
+
+Va en un `.env` en la raíz del proyecto, que **nunca se sube al repo**:
+
+```bash
+cp .env.example .env
+```
+
+Y dentro:
+
+```
+TRICOUNT_URL=https://tricount.com/VUESTRA_CLAVE
+```
+
+Lo leen los tres scripts (`test:tricount`, `sync`, `month_snapshot.py`), por
+este orden: argumento de línea de comandos → `TRICOUNT_URL` → `db.json`.
+
+> **Por qué esto importa.** Tricount no tiene API key: la "clave" es el trozo
+> final del enlace de invitación, y cualquiera que lo tenga puede leer vuestros
+> gastos. Si el enlace acaba en un repo público, el único arreglo es crear un
+> tricount nuevo — no se puede revocar.
+>
+> Por eso `.env`, `db.json` y `snapshots/tricount.json` están en `.gitignore`,
+> y el snapshot mensual guarda los datos ya resueltos pero **no** el enlace.
+
 ## El cierre de mes
 
 Al final de cada mes se congela el mes en un fichero estático:

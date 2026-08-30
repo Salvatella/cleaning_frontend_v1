@@ -10,7 +10,15 @@ web/dist/
 db.json
 db.bak.json
 tricount-raw.json
-snapshots/tricount.json
+
+# snapshots/ SÍ se sube: es lo que la web publicada lee para mostrar los meses
+# cerrados y los gastos. Ya no lleva el enlace del Tricount dentro (el script
+# lo omite a propósito), solo los datos ya resueltos.
+#
+# OJO: en un repo público, eso significa que vuestros gastos son visibles para
+# cualquiera que dé con el repo. Es la misma exposición que tener la web
+# pública, porque la web los enseña igual. Si no os vale, el repo debe ser
+# privado y la web publicarse en Netlify o Cloudflare Pages.
 
 # --- Credenciales ---------------------------------------------------------
 # La publishable de Supabase SÍ va en web/src/config.js (es pública por

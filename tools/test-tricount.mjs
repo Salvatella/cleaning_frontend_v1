@@ -14,13 +14,18 @@
 import { writeFileSync } from 'node:fs';
 import { fetchTricount, settle } from '../server/tricount.js';
 
+try {
+  process.loadEnvFile?.(new URL('../.env', import.meta.url));
+} catch { /* sin .env */ }
+
 const args = process.argv.slice(2);
 const asJson = args.includes('--json');
 const asRaw = args.includes('--raw');
-const target = args.find((a) => !a.startsWith('--'));
+const target = args.find((a) => !a.startsWith('--')) || process.env.TRICOUNT_URL;
 
 if (!target) {
-  console.error('Uso: node tools/test-tricount.mjs <url-o-clave-del-tricount> [--json|--raw]');
+  console.error('Uso: node tools/test-tricount.mjs [url-o-clave] [--json|--raw]');
+  console.error('     (sin argumento usa TRICOUNT_URL del .env)');
   process.exit(1);
 }
 

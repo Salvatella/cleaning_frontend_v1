@@ -43,9 +43,41 @@ MESES = ["", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
 
 # ---------------------------------------------------------------- Supabase ---
 
+def load_dotenv():
+    """
+    Carga el .env del root del proyecto en el entorno, sin dependencias.
+
+    Solo rellena lo que no esté ya definido: una variable de entorno real
+    siempre gana sobre el fichero.
+    """
+    import os
+    env = ROOT / ".env"
+    if not env.exists():
+        return
+    for line in env.read_text(encoding="utf8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
+
+
+def load_tricount_url(db):
+    """
+    De dónde sale el enlace del tricount, por orden de preferencia:
+      1. TRICOUNT_URL del entorno o del .env   ← recomendado
+      2. el campo `tricount.url` de db.json    ← compatibilidad
+    Ninguno de los dos se sube al repo: ambos están en .gitignore.
+    """
+    import os
+    load_dotenv()
+    return os.environ.get("TRICOUNT_URL") or (db.get("tricount") or {}).get("url") or ""
+
+
 def load_supabase_config():
     """La URL y la clave anon, del entorno o de supabase/config.local.json."""
     import os
+    load_dotenv()
     url = os.environ.get("SUPABASE_URL")
     key = os.environ.get("SUPABASE_KEY")
     cfg = ROOT / "supabase" / "config.local.json"
@@ -59,7 +91,21 @@ def load_supabase_config():
             "  export SUPABASE_URL=... y SUPABASE_KEY=...\n"
             "  o crea supabase/config.local.json con {\"url\": ..., \"anonKey\": ...}"
         )
-    return url.rstrip("/"), key
+
+    # El panel de Supabase enseña la URL con el sufijo /rest/v1/, y es fácil
+    # copiarla entera. Lo quitamos: aquí solo queremos el host del proyecto.
+    url = url.strip().rstrip("/")
+    if url.endswith("/rest/v1"):
+        url = url[: -len("/rest/v1")]
+
+    if key.startswith("sb_secret_") or key.startswith("eyJ") and "service_role" in key:
+        raise SystemExit(
+            "Esa parece la clave SECRETA de Supabase. Usa la publishable\n"
+            "(sb_publishable_...): la secreta salta todas las reglas RLS y no\n"
+            "debe salir de un backend."
+        )
+
+    return url, key
 
 
 def fetch_checks_from_supabase():
@@ -458,9 +504,10 @@ def main():
 
     tricount = None
     if not args.no_tricount:
-        url = (db.get("tricount") or {}).get("url")
+        url = load_tricount_url(db)
         if not url:
-            print("⚠️  Sin URL de Tricount en db.json — snapshot solo de limpieza.")
+            print("⚠️  Sin TRICOUNT_URL (ni en .env ni en db.json) — "
+                  "snapshot solo de limpieza.")
         else:
             app_id = (db.get("tricount") or {}).get("appInstallationId") or str(uuid.uuid4())
             try:
@@ -480,7 +527,9 @@ def main():
     # Tricount (su API no admite peticiones desde el navegador).
     if tricount:
         (SNAP_DIR / "tricount.json").write_text(json.dumps({
-            "url": (db.get("tricount") or {}).get("url", ""),
+            # El enlace NO se escribe en el snapshot: ese fichero puede
+            # acabar publicado. Solo van los datos ya resueltos.
+            "url": "",
             "title": tricount.get("title"),
             "currency": tricount.get("currency"),
             "lastSync": tricount.get("fetchedAt"),
