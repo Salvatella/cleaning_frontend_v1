@@ -1,0 +1,3 @@
+
+npm run snapshot
+git add snapshots/ && git commit -m "Cierre de agosto" && git push
