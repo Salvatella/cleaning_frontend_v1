@@ -8,7 +8,7 @@ import {
   syncExpenses,
   updateItem,
 } from '../store.js';
-import { Check, ago, money } from '../components/bits.jsx';
+import { Check, ago, matchPerson, money } from '../components/bits.jsx';
 
 export default function Compra({ state, setState, reload }) {
   const { shopping, people, tricount } = state;
@@ -149,21 +149,20 @@ export default function Compra({ state, setState, reload }) {
             {money(tricount.total, tricount.currency)} en total
           </p>
 
-          {!tricount.url ? (
-            !puedeSincronizarTricount ? (
-              <p className="empty">
-                Los gastos los genera el script mensual.
-                <br />
-                <code>python tools/month_snapshot.py</code>
-              </p>
-            ) : (
+          {/*
+            Qué enseñar se decide por si HAY BALANCES, no por si hay `url`:
+            el snapshot publicado no lleva el enlace dentro a propósito (acaba
+            en un repo público), así que mirar la url daba un falso negativo.
+          */}
+          {(tricount.balances ?? []).length === 0 ? (
+            puedeSincronizarTricount && !tricount.url ? (
             <form onSubmit={saveUrl}>
               <p className="empty" style={{ paddingBottom: 8 }}>
                 Pega el enlace de vuestro Tricount para empezar.
               </p>
               <div className="additem">
                 <input
-                  placeholder="https://tricount.com/es/…"
+                  placeholder="https://tricount.com/…"
                   value={urlDraft}
                   onChange={(e) => setUrlDraft(e.target.value)}
                 />
@@ -172,9 +171,13 @@ export default function Compra({ state, setState, reload }) {
                 </button>
               </div>
             </form>
+            ) : (
+              <p className="empty">
+                Todavía no hay balances. Genera los datos con
+                <br />
+                <code>npm run snapshot</code>
+              </p>
             )
-          ) : (tricount.balances ?? []).length === 0 ? (
-            <p className="empty">Aún no hay gastos en el Tricount.</p>
           ) : (
             <>
               {[...tricount.balances]
@@ -182,12 +185,10 @@ export default function Compra({ state, setState, reload }) {
                 .map((b) => {
                   const w = (Math.abs(b.amount) / maxAbs) * 45;
                   const positive = b.amount >= 0;
-                  const person = people.find(
-                    (p) => p.name.toLowerCase() === String(b.person).toLowerCase()
-                  );
+                  const person = matchPerson(people, b.person);
                   return (
                     <div className="bal" key={b.person}>
-                      <div className="nm">{b.person}</div>
+                      <div className="nm">{person?.name ?? b.person}</div>
                       <div className="balbar">
                         <div className="zero" />
                         <div
@@ -215,7 +216,9 @@ export default function Compra({ state, setState, reload }) {
                   <br />
                   {tricount.settlements.map((m, i) => (
                     <span key={i}>
-                      {m.from} → {m.to} <b>{money(m.amount, tricount.currency)}</b>
+                      {matchPerson(people, m.from)?.name ?? m.from} →{' '}
+                      {matchPerson(people, m.to)?.name ?? m.to}{' '}
+                      <b>{money(m.amount, tricount.currency)}</b>
                       <br />
                     </span>
                   ))}
@@ -243,9 +246,7 @@ export default function Compra({ state, setState, reload }) {
             </thead>
             <tbody>
               {tricount.expenses.slice(0, 12).map((e, i) => {
-                const person = people.find(
-                  (p) => p.name.toLowerCase() === String(e.paidBy).toLowerCase()
-                );
+                const person = matchPerson(people, e.paidBy);
                 return (
                   <tr key={i}>
                     <td>{e.date ?? '—'}</td>

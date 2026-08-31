@@ -1,0 +1,58 @@
+name: Cierre de mes
+
+# Congela el mes que acaba de terminar y refresca los gastos de Tricount.
+#
+# Corre solo el día 4 de cada mes. Escribe en snapshots/ y hace push; ese push
+# dispara deploy.yml, que republica la web. No hace falta que ningún ordenador
+# vuestro esté encendido.
+#
+# Requiere UN secreto en Settings → Secrets and variables → Actions:
+#   TRICOUNT_URL = https://tricount.com/VUESTRA_CLAVE
+#
+# Las credenciales de Supabase NO van aquí: ya están en web/src/config.js, que
+# es público por diseño (la clave publishable está pensada para eso).
+
+on:
+  schedule:
+    # 06:00 UTC del día 4 = 08:00 en Madrid (verano) / 07:00 (invierno).
+    # GitHub usa siempre UTC y no admite zonas horarias.
+    - cron: '0 6 4 * *'
+  workflow_dispatch: # y a mano cuando quieras, desde la pestaña Actions
+
+permissions:
+  contents: write # para poder commitear los snapshots
+
+concurrency:
+  group: cierre-de-mes
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Congelar el mes
+        env:
+          TRICOUNT_URL: ${{ secrets.TRICOUNT_URL }}
+        run: npm run snapshot
+
+      - name: Commitear si algo cambió
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add snapshots/
+          # Sin cambios no hay commit: evita ensuciar el historial cada mes.
+          if git diff --staged --quiet; then
+            echo "Nada que actualizar."
+          else
+            git commit -m "Cierre de mes automático ($(date -u +%Y-%m-%d))"
+            git push
+          fi

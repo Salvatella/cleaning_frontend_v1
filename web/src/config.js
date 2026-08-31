@@ -21,10 +21,14 @@ export const useSupabase = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
 /** La configuración del piso: estática, no cambia casi nunca. */
 export const CASA = {
   home: 'Piso Prats',
+  // `tricountName` es cómo se llama cada uno DENTRO de Tricount, que no tiene
+  // por qué coincidir. Sirve para que los gastos se pinten con vuestro color.
+  // Si lo dejas vacío, se intenta emparejar por la primera palabra del nombre.
   people: [
-    { id: 'ferran', name: 'Ferran', color: '#2a78d6' },
-    { id: 'jimmy', name: 'Jimmy', color: '#eb6834' },
-    { id: 'mel', name: 'Mel', color: '#1baf7a' },
+    { id: 'ferran', name: 'Ferran', color: '#2a78d6', tricountName: 'Ferran Salvatella' },
+    { id: 'jimmy', name: 'Jimmy', color: '#eb6834', tricountName: 'Jing' },
+    // El id se queda en 'mel': es lo que está guardado en Supabase.
+    { id: 'mel', name: 'Miel', color: '#1baf7a', tricountName: 'Miel' },
   ],
   cleaning: {
     zones: [

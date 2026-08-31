@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { loadMonth, loadMonths } from '../store.js';
-import { Bar, Tile, money } from '../components/bits.jsx';
+import { Bar, Tile, matchPerson, money } from '../components/bits.jsx';
 
 const MES_CORTO = ['', 'ene', 'feb', 'mar', 'abr', 'may', 'jun',
   'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
@@ -170,9 +170,7 @@ export default function Dashboard({ state }) {
             </thead>
             <tbody>
               {tricount.monthExpenses.map((e, i) => {
-                const person = people.find(
-                  (p) => p.name.toLowerCase() === String(e.paidBy).toLowerCase()
-                );
+                const person = matchPerson(people, e.paidBy);
                 return (
                   <tr key={i}>
                     <td>{e.date ?? '—'}</td>

@@ -22,6 +22,33 @@ export const ago = (iso) => {
   return `hace ${Math.round(h / 24)} días`;
 };
 
+/**
+ * Empareja un nombre venido de Tricount con una persona del piso.
+ *
+ * En Tricount cada uno se llama como le dio la gana ("Ferran Salvatella",
+ * "Miel", "Jing"), y aquí son "Ferran", "Mel" y "Jimmy". Probamos, en orden:
+ *   1. el `tricountName` que se ponga en config.js  ← lo fiable
+ *   2. el nombre exacto
+ *   3. el nombre del piso como primera palabra del de Tricount
+ *      ("Ferran Salvatella" → Ferran)
+ *
+ * Si no encuentra a nadie devuelve null y quien lo llame pinta un gris.
+ */
+export function matchPerson(people, rawName) {
+  if (!rawName) return null;
+  const name = String(rawName).trim().toLowerCase();
+  if (!name) return null;
+
+  const byAlias = people.find((p) => p.tricountName?.toLowerCase() === name);
+  if (byAlias) return byAlias;
+
+  const exact = people.find((p) => p.name.toLowerCase() === name);
+  if (exact) return exact;
+
+  const first = name.split(/\s+/)[0];
+  return people.find((p) => p.name.toLowerCase() === first) ?? null;
+}
+
 export function Tile({ label, value, unit, children, color }) {
   return (
     <div className="card tile">
