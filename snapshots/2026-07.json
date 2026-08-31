@@ -1,23 +1,26 @@
 {
   "month": "2026-07",
   "title": "Dashboard de Julio 2026",
-  "generatedAt": "2026-08-30T18:19:33.552Z",
+  "generatedAt": "2026-08-31T13:15:12.900Z",
   "live": false,
   "people": [
     {
       "id": "ferran",
       "name": "Ferran",
-      "color": "#2a78d6"
+      "color": "#2a78d6",
+      "tricountName": "Ferran Salvatella"
     },
     {
       "id": "jimmy",
       "name": "Jimmy",
-      "color": "#eb6834"
+      "color": "#eb6834",
+      "tricountName": "Jing"
     },
     {
       "id": "mel",
-      "name": "Mel",
-      "color": "#1baf7a"
+      "name": "Miel",
+      "color": "#1baf7a",
+      "tricountName": "Miel"
     }
   ],
   "cleaning": {
@@ -88,7 +91,7 @@
       },
       {
         "id": "mel",
-        "name": "Mel",
+        "name": "Miel",
         "color": "#1baf7a",
         "zones": 6,
         "done": 0,
