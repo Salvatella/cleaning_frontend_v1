@@ -6,16 +6,18 @@
  * deriva aquí al vuelo. Así nunca hay datos incoherentes que resincronizar.
  */
 
-import {
-  addWeeks,
-  format,
-  getISODay,
-  getISOWeek,
-  getISOWeekYear,
-  parseISO,
-  startOfISOWeek,
-} from 'date-fns';
-import { es } from 'date-fns/locale';
+// Importamos función a función y NO desde 'date-fns' a secas: el barril carga
+// 252 ficheros, y 'date-fns/locale' carga los 98 idiomas. En el navegador da
+// igual (Vite lo optimiza), pero el script de Node se lo comía entero en cada
+// ejecución: ~1,6 s de arranque por nada.
+import { addWeeks } from 'date-fns/addWeeks';
+import { format } from 'date-fns/format';
+import { getISODay } from 'date-fns/getISODay';
+import { getISOWeek } from 'date-fns/getISOWeek';
+import { getISOWeekYear } from 'date-fns/getISOWeekYear';
+import { parseISO } from 'date-fns/parseISO';
+import { startOfISOWeek } from 'date-fns/startOfISOWeek';
+import { es } from 'date-fns/locale/es';
 
 /** "2026-W34" a partir de una fecha. */
 export function weekKey(date = new Date()) {

@@ -49,7 +49,7 @@ export function parseTricountKey(urlOrKey) {
  * `appId` debería ser estable entre ejecuciones (guárdalo en db.json), para
  * no registrar una instalación nueva en cada sync.
  */
-async function openSession(appId) {
+async function openSession(appId, signal) {
   const { publicKey } = generateKeyPairSync('rsa', {
     modulusLength: 2048,
     publicKeyEncoding: { type: 'spki', format: 'pem' },
@@ -66,6 +66,7 @@ async function openSession(appId) {
   const res = await fetch(`${BASE}/v1/session-registry-installation`, {
     method: 'POST',
     headers,
+    signal, // sin esto, una autenticación colgada bloquea el script para siempre
     body: JSON.stringify({
       app_installation_uuid: appId,
       client_public_key: publicKey,
@@ -122,7 +123,7 @@ export async function fetchTricount(
   const timer = setTimeout(() => ac.abort(), timeoutMs);
 
   try {
-    const session = await openSession(appId);
+    const session = await openSession(appId, ac.signal);
 
     const url = `${BASE}/v1/user/${session.userId}/registry?public_identifier_token=${encodeURIComponent(key)}`;
     const res = await fetch(url, { headers: session.headers, signal: ac.signal });
@@ -240,6 +241,11 @@ export async function fetchTricount(
       },
       ...(includeRaw ? { raw: json } : {}),
     };
+  } catch (err) {
+    if (err?.name === 'AbortError') {
+      throw new Error(`Tricount no respondió en ${timeoutMs / 1000} s. ¿Hay conexión?`);
+    }
+    throw err;
   } finally {
     clearTimeout(timer);
   }
