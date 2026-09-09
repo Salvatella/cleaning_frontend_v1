@@ -140,7 +140,11 @@ if (!skipTricount) {
   } else {
     try {
       tricount = await fetchTricount(url, { appId: process.env.TRICOUNT_APP_ID || randomUUID() });
-      console.log(`   ✓ Tricount: ${tricount.expenses.length} gastos · ${money(tricount.total, tricount.currency)}`);
+      console.log(
+        `   ✓ Tricount: ${tricount.expenses.length} apuntes · ` +
+          `${tricount.transfers.length} reembolsos · ` +
+          `${money(tricount.total, tricount.currency)}`
+      );
     } catch (err) {
       // Que falle Tricount no debe impedir archivar el mes de limpieza.
       console.log(`   ⚠️  Tricount falló (${err.message}) — snapshot solo de limpieza.`);
@@ -157,6 +161,9 @@ if (tricount) {
     status: 'ok',
     balances: tricount.balances,
     expenses: tricount.expenses,
+    // Los reembolsos entre nosotros. Ya están dentro de los balances; se
+    // guardan aparte para poder auditar por qué una deuda bajó.
+    transfers: tricount.transfers ?? [],
     total: tricount.total,
   };
 }
@@ -181,6 +188,7 @@ if (tricount) {
         balances: tricount.balances,
         settlements: settle(tricount.balances),
         expenses: tricount.expenses,
+        transfers: tricount.transfers ?? [],
         total: tricount.total,
       },
       null,

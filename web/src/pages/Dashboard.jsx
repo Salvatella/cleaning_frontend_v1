@@ -5,10 +5,28 @@ import { Bar, Tile, matchPerson, money } from '../components/bits.jsx';
 const MES_CORTO = ['', 'ene', 'feb', 'mar', 'abr', 'may', 'jun',
   'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 
+const MES_LARGO = ['', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+  'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
 const label = (m) => {
   const [y, mo] = m.split('-');
   return `${MES_CORTO[Number(mo)]} ${y}`;
 };
+
+/** "2026-09" → "septiembre de 2026". Para decir en cada sitio de qué va esto. */
+const periodo = (m) => {
+  const [y, mo] = m.split('-');
+  return `${MES_LARGO[Number(mo)]} de ${y}`;
+};
+
+/** "semanas 36–40", o "semana 36" si el mes solo tiene una. */
+function rangoSemanas(perWeek = []) {
+  const nums = perWeek.map((w) => Number(w.week.split('-W')[1])).filter(Number.isFinite);
+  if (!nums.length) return null;
+  const a = Math.min(...nums);
+  const b = Math.max(...nums);
+  return a === b ? `semana ${a}` : `semanas ${a}–${b}`;
+}
 
 export default function Dashboard({ state }) {
   const [months, setMonths] = useState([]);
@@ -42,18 +60,28 @@ export default function Dashboard({ state }) {
   const ranked = [...stats.perPerson].sort((a, b) => (b.pct ?? -1) - (a.pct ?? -1));
   const best = ranked.find((p) => p.zones > 0);
 
+  // El mes del que habla TODA esta página. Se repite en cada bloque a
+  // propósito: antes no se sabía si un KPI era del mes o de la semana.
+  const mes = periodo(data.month);
+  const semanas = rangoSemanas(stats.perWeek);
+
   return (
     <>
       <div className="head">
         <div>
           <h1>{data.title}</h1>
           <p className="sub">
-            {stats.weeks} semanas ·{' '}
+            {mes}
+            {semanas ? ` · ${semanas}` : ''} ·{' '}
             {data.live ? (
               <span className="tag live">● En curso</span>
             ) : (
               <span className="tag">Archivado</span>
             )}
+          </p>
+          <p className="sub hint">
+            Todo lo de esta página es del <strong>mes entero</strong>. Lo que toca hacer
+            ahora está en «Esta semana».
           </p>
         </div>
 
@@ -79,25 +107,37 @@ export default function Dashboard({ state }) {
       </div>
 
       <div className="grid4">
-        <Tile label="Cumplimiento" value={stats.pct ?? '—'} unit={stats.pct != null ? '%' : ''}>
-          {stats.done} de {stats.total} zonas
+        <Tile
+          label="Cumplimiento"
+          scope="todo el mes"
+          value={stats.pct ?? '—'}
+          unit={stats.pct != null ? '%' : ''}
+        >
+          {stats.done} de {stats.total} zonas del mes
         </Tile>
-        <Tile label="Turnos completos" value={stats.turnsComplete} unit={`/${stats.turns}`}>
+        <Tile
+          label="Turnos completos"
+          scope="todo el mes"
+          value={stats.turnsComplete}
+          unit={`/${stats.turns}`}
+        >
           {stats.turns - stats.turnsComplete} quedaron a medias
         </Tile>
         <Tile
-          label="Mejor del mes"
+          label="Quien mejor cumple"
+          scope="todo el mes"
           value={best?.pct != null ? `${best.pct}%` : '—'}
           color={best?.color}
         >
           {best?.name ?? 'sin datos'}
         </Tile>
         <Tile
-          label="Gastos del mes"
+          label="Gastos"
+          scope="todo el mes"
           value={tricount ? money(tricount.monthTotal, tricount.currency) : '—'}
         >
           {tricount
-            ? `${tricount.monthExpenses.length} apuntes`
+            ? `${tricount.monthExpenses.length} apuntes en ${mes}`
             : 'Tricount sin configurar'}
         </Tile>
       </div>
@@ -105,7 +145,7 @@ export default function Dashboard({ state }) {
       <div className="grid2">
         <div className="card">
           <h2>Cumplimiento por persona</h2>
-          <p className="cap">% de zonas hechas a tiempo · {data.title.toLowerCase()}</p>
+          <p className="cap">% de zonas hechas a tiempo en {mes}</p>
           {ranked.every((p) => p.pct == null) ? (
             <p className="empty">Sin datos este mes.</p>
           ) : (
@@ -116,13 +156,16 @@ export default function Dashboard({ state }) {
           )}
 
           <h2 style={{ marginTop: 22 }}>Semana a semana</h2>
-          <p className="cap">% de zonas completadas cada semana del mes</p>
+          <p className="cap">
+            Una barra por cada semana de {mes}
+            {semanas ? ` (${semanas})` : ''}
+          </p>
           <WeekBars weeks={stats.perWeek} people={people} />
         </div>
 
         <div className="card">
           <h2>Zonas más olvidadas</h2>
-          <p className="cap">Veces que se quedó sin hacer este mes</p>
+          <p className="cap">Veces que se quedó sin hacer en {mes}</p>
           {stats.skippedZones.length === 0 ? (
             <p className="empty">Ninguna zona saltada. 👏</p>
           ) : (
@@ -132,7 +175,7 @@ export default function Dashboard({ state }) {
           )}
 
           <h2 style={{ marginTop: 22 }}>Reparto del mes</h2>
-          <p className="cap">Turnos y zonas por persona</p>
+          <p className="cap">Turnos y zonas de cada uno en {mes}</p>
           <table>
             <thead>
               <tr><th>Persona</th><th>Turnos</th><th>Zonas</th><th>A tiempo</th></tr>
@@ -160,9 +203,10 @@ export default function Dashboard({ state }) {
 
       {tricount?.monthExpenses?.length > 0 && (
         <div className="card mt">
-          <h2>Gastos de {label(data.month)}</h2>
+          <h2>Gastos de {mes}</h2>
           <p className="cap">
-            Importados de Tricount · {money(tricount.monthTotal, tricount.currency)} en total
+            Solo los apuntes con fecha de {mes} · {money(tricount.monthTotal, tricount.currency)} en
+            total. Los pagos entre nosotros no cuentan aquí: solo ajustan el balance.
           </p>
           <table className="stack-sm">
             <thead>
@@ -174,7 +218,10 @@ export default function Dashboard({ state }) {
                 return (
                   <tr key={i}>
                     <td>{e.date ?? '—'}</td>
-                    <td>{e.title}</td>
+                    <td>
+                      {e.title}
+                      {e.kind === 'income' && <span className="scope inline">ingreso</span>}
+                    </td>
                     <td>
                       <div className="person">
                         <span className="dot" style={{ background: person?.color ?? '#898781' }} />
@@ -206,7 +253,7 @@ function WeekBars({ weeks, people }) {
           <div className="col">
             <div className="colfill" style={{ height: `${w.pct ?? 0}%` }} />
           </div>
-          <span className="wk">{w.week.split('-W')[1]}</span>
+          <span className="wk">sem {w.week.split('-W')[1]}</span>
           <span className="wpct">{w.pct}%</span>
           <span className="who">
             {w.turns.map((t) => (

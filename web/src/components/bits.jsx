@@ -49,10 +49,21 @@ export function matchPerson(people, rawName) {
   return people.find((p) => p.name.toLowerCase() === first) ?? null;
 }
 
-export function Tile({ label, value, unit, children, color }) {
+/**
+ * Tarjeta de KPI.
+ *
+ * `scope` es el período del que habla el número ("todo el mes"). No es
+ * decorativo: sin él nadie sabía si un KPI iba del mes o de la semana en
+ * curso, que es la queja que lo trajo aquí. Si un KPI no lleva scope, es que
+ * no depende del tiempo.
+ */
+export function Tile({ label, value, unit, children, color, scope }) {
   return (
     <div className="card tile">
-      <p className="lbl">{label}</p>
+      <p className="lbl">
+        {label}
+        {scope && <span className="scope">{scope}</span>}
+      </p>
       <div className="val" style={color ? { color } : undefined}>
         {value}
         {unit && <span className="unit">{unit}</span>}

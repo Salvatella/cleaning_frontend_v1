@@ -126,7 +126,11 @@ export function buildMonth(db, month, now = new Date()) {
       perWeek,
       skippedZones,
     },
-    tricount: t.url
+    // Antes esto era `t.url ? ...`, pero en los snapshots publicados vaciamos
+    // la url a propósito (no queremos el enlace del tricount en un repo
+    // público), así que el bloque entero desaparecía y el dashboard se quedaba
+    // sin gastos. Lo que decide es si hay datos, no si hay enlace.
+    tricount: t.url || t.balances?.length || t.expenses?.length
       ? {
           title: t.title ?? null,
           currency: t.currency ?? 'EUR',

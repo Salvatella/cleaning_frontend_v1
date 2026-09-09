@@ -33,7 +33,8 @@ console.log('tipos vistos:    ', data.diagnostics.typesSeen.join(', ') || '(ning
 console.log('estados vistos:  ', data.diagnostics.statusesSeen.join(', ') || '(ninguno)');
 console.log('apuntes crudos:  ', data.diagnostics.rawEntries);
 console.log('saltados por status:    ', data.diagnostics.skippedByStatus);
-console.log('saltados por transfer:  ', data.diagnostics.skippedAsTransfer);
+console.log('gastos / ingresos / reembolsos: ' +
+  `${data.diagnostics.expenses} / ${data.diagnostics.incomes} / ${data.diagnostics.transfers}`);
 
 console.log('\n--- APUNTES ---');
 for (const raw of reg?.all_registry_entry ?? []) {
@@ -49,8 +50,13 @@ for (const raw of reg?.all_registry_entry ?? []) {
   }
 }
 
-console.log('\n--- BALANCES QUE CALCULAMOS AHORA (posiblemente mal) ---');
+console.log('\n--- BALANCES QUE CALCULAMOS ---');
 for (const b of data.balances) {
   console.log(`  ${b.person.padEnd(20)} ${String(b.amount).padStart(8)}   (pagó ${b.paid} · le toca ${b.share})`);
+}
+
+console.log('\n--- REEMBOLSOS DETECTADOS ---');
+for (const t of data.transfers ?? []) {
+  console.log(`  ${t.date}  ${t.from} → ${t.to}  ${t.amount}  "${t.title}"`);
 }
 console.log('');

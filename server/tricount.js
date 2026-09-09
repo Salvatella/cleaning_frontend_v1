@@ -155,10 +155,30 @@ export async function fetchTricount(
       })
       .filter(Boolean);
 
-    // ---- Gastos ---------------------------------------------------------
+    // ---- Apuntes --------------------------------------------------------
+    // Tricount tiene tres clases de apunte y las TRES mueven el balance:
+    //
+    //   · gasto       alguien adelanta dinero del piso y se reparte
+    //   · ingreso     entra dinero (una devolución, una fianza) y se reparte
+    //   · reembolso   alguien le paga a otro para saldar cuentas (BALANCE)
+    //
+    // Antes solo se contaban los gastos: un reembolso se descartaba entero, así
+    // que la deuda no bajaba nunca. Miel podía pagar y seguir apareciendo a
+    // −29,91 € para siempre.
+    //
+    // La aritmética es la misma para los tres. Para cada apunte:
+    //     paid[dueño]       += importe
+    //     consumed[miembro] += su parte
+    // y el balance de cada uno es paid − consumed. Un reembolso encaja solo: el
+    // que paga es el "dueño" y el que cobra es su única allocation.
+    //
+    // Lo único que cambia entre tipos es qué se ENSEÑA. Un reembolso no es
+    // gasto del piso, así que no entra ni en la tabla ni en el total del mes:
+    // va aparte, en `transfers`.
     const paid = new Map();     // nombre → total adelantado
     const consumed = new Map(); // nombre → total que le corresponde
-    const expenses = [];
+    const expenses = [];        // gastos e ingresos (lo que se compara mes a mes)
+    const transfers = [];       // pagos entre nosotros
     let currency = null;
 
     // Diagnóstico: distingue "no vino nada" de "vino pero lo filtré todo".
@@ -167,12 +187,15 @@ export async function fetchTricount(
       rawEntries: entryList.length,
       noRegistryEntry: 0,
       skippedByStatus: 0,
-      skippedAsTransfer: 0,
+      expenses: 0,
+      incomes: 0,
+      transfers: 0,
       statusesSeen: new Set(),
       typesSeen: new Set(),
       registryKeys: Object.keys(registry),
     };
 
+    const rows = [];
     for (const raw of entryList) {
       const e = raw?.RegistryEntry;
       if (!e) {
@@ -185,36 +208,72 @@ export async function fetchTricount(
         diag.skippedByStatus++;
         continue;
       }
+      rows.push(e);
+    }
 
-      // BALANCE = un reembolso entre personas, no un gasto del piso.
-      const isTransfer = e.type_transaction === 'BALANCE';
-      if (isTransfer) diag.skippedAsTransfer++;
+    const isTransfer = (e) => e.type_transaction === 'BALANCE';
+    const rawValue = (e) => num(e.amount?.value ?? e.amount_local?.value);
 
-      const amount = Math.abs(num(e.amount?.value ?? e.amount_local?.value));
+    // Orientación global del signo. Hoy la API devuelve TODO en negativo (los
+    // gastos de este piso llegan como -64.00), pero eso no está garantizado:
+    // no es una API pública ni documentada. Lo que no cambia es que un gasto
+    // es dinero que sale del bolsillo de quien lo adelanta.
+    //
+    // Así que fijamos el signo una sola vez —por votación, mirando cuántos
+    // gastos vienen de cada signo— y lo aplicamos igual a todos los apuntes.
+    // Contamos en vez de sumar a propósito: sumando, un mes con una devolución
+    // grande y pocos gastos podría invertir la orientación de todo el mes.
+    //
+    // Ojo: hacerlo con Math.abs() por apunte (como antes) machacaría justo la
+    // información que distingue un ingreso de un gasto.
+    const gastos = rows.filter((e) => !isTransfer(e)).map(rawValue).filter((v) => v !== 0);
+    const negativos = gastos.filter((v) => v < 0).length;
+    const orient =
+      negativos * 2 === gastos.length
+        ? gastos.reduce((s, v) => s + v, 0) < 0 // empate: decide el importe
+          ? -1
+          : 1
+        : negativos * 2 > gastos.length
+          ? -1
+          : 1;
+
+    for (const e of rows) {
+      const amount = round2(rawValue(e) * orient);
       const payer = memberName(e.membership_owned) ?? 'desconocido';
       currency ??= e.amount?.currency ?? null;
 
-      paid.set(payer, (paid.get(payer) ?? 0) + (isTransfer ? 0 : amount));
+      paid.set(payer, (paid.get(payer) ?? 0) + amount);
 
       for (const a of e.allocations ?? []) {
         const who = memberName(a?.membership) ?? 'desconocido';
-        const share = Math.abs(num(a?.amount?.value));
-        if (!isTransfer) consumed.set(who, (consumed.get(who) ?? 0) + share);
+        consumed.set(who, (consumed.get(who) ?? 0) + num(a?.amount?.value) * orient);
       }
 
-      if (!isTransfer) {
-        expenses.push({
-          date: e.date ? String(e.date).slice(0, 10) : null,
-          title: e.description ?? '(sin concepto)',
-          category: e.category ?? null,
-          paidBy: payer,
-          amount: round2(amount),
-          currency: e.amount?.currency ?? currency,
-        });
+      const row = {
+        date: e.date ? String(e.date).slice(0, 10) : null,
+        title: e.description ?? '(sin concepto)',
+        category: e.category ?? null,
+        paidBy: payer,
+        amount,
+        currency: e.amount?.currency ?? currency,
+      };
+
+      if (isTransfer(e)) {
+        diag.transfers++;
+        const to = (e.allocations ?? []).map((a) => memberName(a?.membership)).filter(Boolean);
+        transfers.push({ ...row, from: payer, to: to[0] ?? null });
+      } else {
+        // Un importe negativo después de orientar es dinero que ENTRA.
+        const income = amount < 0;
+        if (income) diag.incomes++;
+        else diag.expenses++;
+        expenses.push({ ...row, kind: income ? 'income' : 'expense' });
       }
     }
 
-    expenses.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    const byDate = (a, b) => String(b.date).localeCompare(String(a.date));
+    expenses.sort(byDate);
+    transfers.sort(byDate);
 
     // ---- Balances -------------------------------------------------------
     // Convención de la app y del mockup: POSITIVO = te deben dinero.
@@ -232,6 +291,7 @@ export async function fetchTricount(
       members,
       balances,
       expenses,
+      transfers,
       total: round2(expenses.reduce((s, x) => s + x.amount, 0)),
       fetchedAt: new Date().toISOString(),
       diagnostics: {
