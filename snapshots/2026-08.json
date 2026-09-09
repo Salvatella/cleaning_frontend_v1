@@ -1,7 +1,7 @@
 {
   "month": "2026-08",
   "title": "Dashboard de Agosto 2026",
-  "generatedAt": "2026-09-04T10:52:50.915Z",
+  "generatedAt": "2026-09-09T11:31:21.965Z",
   "live": false,
   "people": [
     {
@@ -19,8 +19,14 @@
     {
       "id": "mel",
       "name": "Miel",
-      "color": "#1baf7a",
+      "color": "#f48fb1",
       "tricountName": "Miel"
+    },
+    {
+      "id": "hongye",
+      "name": "HongYe",
+      "color": "#4a3aa7",
+      "tricountName": "HongYe"
     }
   ],
   "cleaning": {
@@ -62,15 +68,37 @@
   "stats": {
     "weeks": 5,
     "total": 30,
-    "done": 2,
-    "pct": 7,
+    "done": 3,
+    "pct": 10,
     "turns": 10,
-    "turnsComplete": 0,
+    "turnsComplete": 1,
     "perPerson": [
       {
         "id": "ferran",
         "name": "Ferran",
         "color": "#2a78d6",
+        "zones": 6,
+        "done": 0,
+        "onTime": 0,
+        "pct": 0,
+        "turns": 2,
+        "turnsComplete": 0
+      },
+      {
+        "id": "jimmy",
+        "name": "Jimmy",
+        "color": "#eb6834",
+        "zones": 6,
+        "done": 0,
+        "onTime": 0,
+        "pct": 0,
+        "turns": 2,
+        "turnsComplete": 0
+      },
+      {
+        "id": "mel",
+        "name": "Miel",
+        "color": "#f48fb1",
         "zones": 9,
         "done": 0,
         "onTime": 0,
@@ -79,26 +107,15 @@
         "turnsComplete": 0
       },
       {
-        "id": "jimmy",
-        "name": "Jimmy",
-        "color": "#eb6834",
+        "id": "hongye",
+        "name": "HongYe",
+        "color": "#4a3aa7",
         "zones": 9,
-        "done": 1,
-        "onTime": 1,
-        "pct": 11,
+        "done": 3,
+        "onTime": 3,
+        "pct": 33,
         "turns": 3,
-        "turnsComplete": 0
-      },
-      {
-        "id": "mel",
-        "name": "Miel",
-        "color": "#1baf7a",
-        "zones": 12,
-        "done": 1,
-        "onTime": 1,
-        "pct": 8,
-        "turns": 4,
-        "turnsComplete": 0
+        "turnsComplete": 1
       }
     ],
     "perWeek": [
@@ -115,13 +132,14 @@
             "total": 3
           },
           {
-            "assignee": "ferran",
+            "assignee": "hongye",
             "label": "Segundo turno",
             "done": 0,
             "total": 3
           }
         ],
         "resting": [
+          "ferran",
           "jimmy"
         ]
       },
@@ -145,7 +163,8 @@
           }
         ],
         "resting": [
-          "ferran"
+          "ferran",
+          "hongye"
         ]
       },
       {
@@ -168,7 +187,8 @@
           }
         ],
         "resting": [
-          "mel"
+          "mel",
+          "hongye"
         ]
       },
       {
@@ -178,7 +198,7 @@
         "pct": 0,
         "turns": [
           {
-            "assignee": "mel",
+            "assignee": "hongye",
             "label": "Primer turno",
             "done": 0,
             "total": 3
@@ -191,45 +211,47 @@
           }
         ],
         "resting": [
-          "jimmy"
+          "jimmy",
+          "mel"
         ]
       },
       {
         "week": "2026-W36",
         "total": 6,
-        "done": 2,
-        "pct": 33,
+        "done": 3,
+        "pct": 50,
         "turns": [
           {
-            "assignee": "jimmy",
+            "assignee": "mel",
             "label": "Primer turno",
-            "done": 1,
+            "done": 0,
             "total": 3
           },
           {
-            "assignee": "mel",
+            "assignee": "hongye",
             "label": "Segundo turno",
-            "done": 1,
+            "done": 3,
             "total": 3
           }
         ],
         "resting": [
-          "ferran"
+          "ferran",
+          "jimmy"
         ]
       }
     ],
     "skippedZones": [
       {
         "zone": "Baño",
-        "count": 10
-      },
-      {
-        "zone": "Salón y suelo",
-        "count": 10
+        "count": 9
       },
       {
         "zone": "Cocina",
-        "count": 8
+        "count": 9
+      },
+      {
+        "zone": "Salón y suelo",
+        "count": 9
       }
     ]
   },
