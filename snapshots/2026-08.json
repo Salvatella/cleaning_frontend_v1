@@ -1,0 +1,237 @@
+{
+  "month": "2026-08",
+  "title": "Dashboard de Agosto 2026",
+  "generatedAt": "2026-09-04T10:52:50.915Z",
+  "live": false,
+  "people": [
+    {
+      "id": "ferran",
+      "name": "Ferran",
+      "color": "#2a78d6",
+      "tricountName": "Ferran Salvatella"
+    },
+    {
+      "id": "jimmy",
+      "name": "Jimmy",
+      "color": "#eb6834",
+      "tricountName": "Jing"
+    },
+    {
+      "id": "mel",
+      "name": "Miel",
+      "color": "#1baf7a",
+      "tricountName": "Miel"
+    }
+  ],
+  "cleaning": {
+    "zones": [
+      {
+        "id": "bano",
+        "name": "Baño"
+      },
+      {
+        "id": "cocina",
+        "name": "Cocina"
+      },
+      {
+        "id": "salon",
+        "name": "Salón y suelo"
+      }
+    ],
+    "shifts": [
+      {
+        "id": "t1",
+        "label": "Primer turno",
+        "days": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "id": "t2",
+        "label": "Segundo turno",
+        "days": [
+          5,
+          6,
+          7
+        ]
+      }
+    ]
+  },
+  "stats": {
+    "weeks": 5,
+    "total": 30,
+    "done": 2,
+    "pct": 7,
+    "turns": 10,
+    "turnsComplete": 0,
+    "perPerson": [
+      {
+        "id": "ferran",
+        "name": "Ferran",
+        "color": "#2a78d6",
+        "zones": 9,
+        "done": 0,
+        "onTime": 0,
+        "pct": 0,
+        "turns": 3,
+        "turnsComplete": 0
+      },
+      {
+        "id": "jimmy",
+        "name": "Jimmy",
+        "color": "#eb6834",
+        "zones": 9,
+        "done": 1,
+        "onTime": 1,
+        "pct": 11,
+        "turns": 3,
+        "turnsComplete": 0
+      },
+      {
+        "id": "mel",
+        "name": "Miel",
+        "color": "#1baf7a",
+        "zones": 12,
+        "done": 1,
+        "onTime": 1,
+        "pct": 8,
+        "turns": 4,
+        "turnsComplete": 0
+      }
+    ],
+    "perWeek": [
+      {
+        "week": "2026-W32",
+        "total": 6,
+        "done": 0,
+        "pct": 0,
+        "turns": [
+          {
+            "assignee": "mel",
+            "label": "Primer turno",
+            "done": 0,
+            "total": 3
+          },
+          {
+            "assignee": "ferran",
+            "label": "Segundo turno",
+            "done": 0,
+            "total": 3
+          }
+        ],
+        "resting": [
+          "jimmy"
+        ]
+      },
+      {
+        "week": "2026-W33",
+        "total": 6,
+        "done": 0,
+        "pct": 0,
+        "turns": [
+          {
+            "assignee": "jimmy",
+            "label": "Primer turno",
+            "done": 0,
+            "total": 3
+          },
+          {
+            "assignee": "mel",
+            "label": "Segundo turno",
+            "done": 0,
+            "total": 3
+          }
+        ],
+        "resting": [
+          "ferran"
+        ]
+      },
+      {
+        "week": "2026-W34",
+        "total": 6,
+        "done": 0,
+        "pct": 0,
+        "turns": [
+          {
+            "assignee": "ferran",
+            "label": "Primer turno",
+            "done": 0,
+            "total": 3
+          },
+          {
+            "assignee": "jimmy",
+            "label": "Segundo turno",
+            "done": 0,
+            "total": 3
+          }
+        ],
+        "resting": [
+          "mel"
+        ]
+      },
+      {
+        "week": "2026-W35",
+        "total": 6,
+        "done": 0,
+        "pct": 0,
+        "turns": [
+          {
+            "assignee": "mel",
+            "label": "Primer turno",
+            "done": 0,
+            "total": 3
+          },
+          {
+            "assignee": "ferran",
+            "label": "Segundo turno",
+            "done": 0,
+            "total": 3
+          }
+        ],
+        "resting": [
+          "jimmy"
+        ]
+      },
+      {
+        "week": "2026-W36",
+        "total": 6,
+        "done": 2,
+        "pct": 33,
+        "turns": [
+          {
+            "assignee": "jimmy",
+            "label": "Primer turno",
+            "done": 1,
+            "total": 3
+          },
+          {
+            "assignee": "mel",
+            "label": "Segundo turno",
+            "done": 1,
+            "total": 3
+          }
+        ],
+        "resting": [
+          "ferran"
+        ]
+      }
+    ],
+    "skippedZones": [
+      {
+        "zone": "Baño",
+        "count": 10
+      },
+      {
+        "zone": "Salón y suelo",
+        "count": 10
+      },
+      {
+        "zone": "Cocina",
+        "count": 8
+      }
+    ]
+  },
+  "tricount": null
+}
