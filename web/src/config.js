@@ -43,7 +43,10 @@ export const CASA = {
       { id: 't1', label: 'Primer turno', days: [1, 2, 3] },
       { id: 't2', label: 'Segundo turno', days: [5, 6, 7] },
     ],
+    // Orden acordado: esta semana empieza Ferran, y va rotando hacia
+    // Jimmy, HongYe y Miel. Con el ancla en la W37 encaja además el
+    // último turno de Miel (vie-dom de la W36), que ya tiene sus marcas.
     rotation: ['ferran', 'jimmy', 'mel', 'hongye'],
-    anchorWeek: '2026-W34',
+    anchorWeek: '2026-W37',
   },
 };
