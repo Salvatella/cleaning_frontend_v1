@@ -48,6 +48,32 @@ const DAY_NAMES = ['', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 's�
 const DAY_SHORT = ['', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 export { DAY_NAMES, DAY_SHORT };
 
+const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+
+/**
+ * Cuánto avanza la rotación cada semana.
+ *
+ * Lo natural sería avanzar tantas posiciones como turnos hay (2), pero eso
+ * solo funciona si ese número y el de personas no comparten divisores. Con
+ * 4 personas y 2 turnos, avanzar de 2 en 2 deja a cada uno clavado en el
+ * mismo turno para siempre: dos harían entre semana y dos el fin de semana,
+ * eternamente.
+ *
+ * La solución: avanzar el primer número >= nº de turnos que sea primo con el
+ * nº de personas. Así la rotación recorre a todo el mundo y, en `n` semanas,
+ * cada persona hace exactamente un turno de cada tipo.
+ *
+ *   3 personas, 2 turnos → paso 2   (2 y 3 son primos entre sí)
+ *   4 personas, 2 turnos → paso 3
+ *   6 personas, 2 turnos → paso 5
+ */
+export function rotationStep(people, shifts) {
+  if (people <= 0) return 1;
+  let step = Math.max(1, shifts);
+  while (gcd(step, people) !== 1) step++;
+  return step;
+}
+
 /**
  * Quién limpia esta semana. Dos turnos por semana, tres personas: cada uno
  * hace dos turnos cada tres semanas y descansa uno. La rotación avanza sola
@@ -67,7 +93,7 @@ export function rotationForWeek(db, week) {
   const n = people.length;
 
   return shifts.map((shift, i) => {
-    const idx = (((offset * shifts.length + i) % n) + n) % n; // % seguro con negativos
+    const idx = (((offset * rotationStep(n, shifts.length) + i) % n) + n) % n;
     return { shift, assignee: people[idx] };
   });
 }

@@ -240,7 +240,7 @@ export default function Compra({ state, setState, reload }) {
         <div className="card mt">
           <h2>Últimos gastos</h2>
           <p className="cap">Importados de Tricount · para añadir uno nuevo, abre la app</p>
-          <table>
+          <table className="stack-sm">
             <thead>
               <tr><th>Fecha</th><th>Concepto</th><th>Pagó</th><th className="num">Importe</th></tr>
             </thead>

@@ -9,6 +9,8 @@ export default function Horario({ state }) {
   const today = todayISO();
   const byId = Object.fromEntries(people.map((p) => [p.id, p]));
   const [next, setNext] = useState([]);
+  // Cuántos libran cada semana: depende de cuánta gente haya en el piso.
+  const descansan = Math.max(0, (people?.length ?? 0) - (cleaning?.shifts?.length ?? 0));
 
   useEffect(() => {
     loadRotation(6, state).then(setNext).catch(() => {});
@@ -20,7 +22,9 @@ export default function Horario({ state }) {
         <div>
           <h1>Horario</h1>
           <p className="sub">
-            Cada semana limpian dos personas, tres días cada una. La tercera descansa y va rotando.
+            Cada semana limpian {cleaning?.shifts?.length ?? 2} personas, tres días cada una.
+            {descansan > 0 &&
+              ` ${descansan === 1 ? 'La otra descansa' : `Las otras ${descansan} descansan`} y van rotando.`}
           </p>
         </div>
       </div>
@@ -56,7 +60,7 @@ export default function Horario({ state }) {
 
         {resting?.length > 0 && (
           <div className="settle">
-            <b>Descansa esta semana:</b>{' '}
+            <b>{resting.length === 1 ? 'Descansa' : 'Descansan'} esta semana:</b>{' '}
             {resting.map((id) => byId[id]?.name ?? id).join(', ')}
           </div>
         )}
@@ -110,7 +114,7 @@ export default function Horario({ state }) {
 
       <p className="sub" style={{ marginTop: 14, color: 'var(--muted)' }}>
         Las zonas, los días de cada turno y el orden de la rotación se cambian en{' '}
-        <code>cleaning</code> dentro de <code>db.json</code>.
+        <code>cleaning</code> dentro de <code>web/src/config.js</code>.
       </p>
     </>
   );

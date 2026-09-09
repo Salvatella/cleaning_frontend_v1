@@ -28,7 +28,10 @@ export const CASA = {
     { id: 'ferran', name: 'Ferran', color: '#2a78d6', tricountName: 'Ferran Salvatella' },
     { id: 'jimmy', name: 'Jimmy', color: '#eb6834', tricountName: 'Jing' },
     // El id se queda en 'mel': es lo que está guardado en Supabase.
-    { id: 'mel', name: 'Miel', color: '#1baf7a', tricountName: 'Miel' },
+    { id: 'mel', name: 'Miel', color: '#f48fb1', tricountName: 'Miel' },
+    // Violeta: es el único cuarto color que mantiene los cuatro distinguibles
+    // para daltonismo junto a los tres anteriores (verificado con el validador).
+    { id: 'hongye', name: 'HongYe', color: '#4a3aa7', tricountName: 'HongYe' },
   ],
   cleaning: {
     zones: [
@@ -40,7 +43,7 @@ export const CASA = {
       { id: 't1', label: 'Primer turno', days: [1, 2, 3] },
       { id: 't2', label: 'Segundo turno', days: [5, 6, 7] },
     ],
-    rotation: ['ferran', 'jimmy', 'mel'],
+    rotation: ['ferran', 'jimmy', 'mel', 'hongye'],
     anchorWeek: '2026-W34',
   },
 };

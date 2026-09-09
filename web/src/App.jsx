@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { NavLink, Navigate, Route, Routes } from 'react-router-dom';
 import { loadState, modo, subscribe } from './store.js';
+import {
+  IconCompra,
+  IconDashboard,
+  IconHorario,
+  IconSemana,
+} from './components/icons.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Horario from './pages/Horario.jsx';
 import Semana from './pages/Semana.jsx';
@@ -61,15 +67,37 @@ export default function App() {
           </div>
         </div>
 
+        {/*
+          Cada enlace lleva dos textos: el largo para el escritorio y uno corto
+          que solo se ve en el móvil, donde no caben cuatro nombres completos.
+        */}
         <nav>
           <div className="navlabel">Piso</div>
-          <NavLink to="/" end><span className="ic">◧</span> Dashboard</NavLink>
-          <NavLink to="/horario"><span className="ic">▦</span> Horario</NavLink>
+
+          <NavLink to="/" end>
+            <IconDashboard className="ic" />
+            <span className="lg">Dashboard</span>
+            <span className="sm">Resumen</span>
+          </NavLink>
+
+          <NavLink to="/horario">
+            <IconHorario className="ic" />
+            <span className="lg">Horario</span>
+            <span className="sm">Horario</span>
+          </NavLink>
+
           <NavLink to="/semana">
-            <span className="ic">✓</span> Esta semana
+            <IconSemana className="ic" />
+            <span className="lg">Esta semana</span>
+            <span className="sm">Semana</span>
             {pending > 0 && <span className="navbadge">{pending}</span>}
           </NavLink>
-          <NavLink to="/compra"><span className="ic">🛒</span> Compra y gastos</NavLink>
+
+          <NavLink to="/compra">
+            <IconCompra className="ic" />
+            <span className="lg">Compra y gastos</span>
+            <span className="sm">Compra</span>
+          </NavLink>
         </nav>
 
         <div className="who">

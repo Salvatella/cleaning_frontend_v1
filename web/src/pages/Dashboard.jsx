@@ -164,7 +164,7 @@ export default function Dashboard({ state }) {
           <p className="cap">
             Importados de Tricount · {money(tricount.monthTotal, tricount.currency)} en total
           </p>
-          <table>
+          <table className="stack-sm">
             <thead>
               <tr><th>Fecha</th><th>Concepto</th><th>Pagó</th><th className="num">Importe</th></tr>
             </thead>
