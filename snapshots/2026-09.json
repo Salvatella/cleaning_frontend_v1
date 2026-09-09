@@ -1,7 +1,7 @@
 {
   "month": "2026-09",
   "title": "Dashboard de Septiembre 2026",
-  "generatedAt": "2026-09-09T15:21:05.546Z",
+  "generatedAt": "2026-09-09T15:35:17.356Z",
   "live": false,
   "people": [
     {
@@ -209,5 +209,38 @@
       }
     ]
   },
-  "tricount": null
+  "tricount": {
+    "title": "Piso Pratsss",
+    "currency": "EUR",
+    "syncedAt": "2026-09-09T15:35:17.347Z",
+    "monthTotal": 0,
+    "monthExpenses": [],
+    "overallBalances": [
+      {
+        "person": "Ferran Salvatella",
+        "paid": 72.65,
+        "share": 64.24,
+        "amount": 8.41
+      },
+      {
+        "person": "Miel",
+        "paid": 34.35,
+        "share": 42.46,
+        "amount": -8.11
+      },
+      {
+        "person": "Jing",
+        "paid": 0,
+        "share": 0.31,
+        "amount": -0.31
+      },
+      {
+        "person": "hongye",
+        "paid": 0.01,
+        "share": 0,
+        "amount": 0.01
+      }
+    ],
+    "overallTotal": 76.81
+  }
 }

@@ -2,20 +2,20 @@
   "url": "",
   "title": "Piso Pratsss",
   "currency": "EUR",
-  "lastSync": "2026-09-09T15:21:05.536Z",
+  "lastSync": "2026-09-09T15:35:17.347Z",
   "status": "ok",
   "balances": [
     {
       "person": "Ferran Salvatella",
-      "paid": 68.45,
-      "share": 38.24,
-      "amount": 30.21
+      "paid": 72.65,
+      "share": 64.24,
+      "amount": 8.41
     },
     {
       "person": "Miel",
-      "paid": 8.35,
-      "share": 38.26,
-      "amount": -29.91
+      "paid": 34.35,
+      "share": 42.46,
+      "amount": -8.11
     },
     {
       "person": "Jing",
@@ -34,7 +34,7 @@
     {
       "from": "Miel",
       "to": "Ferran Salvatella",
-      "amount": 29.91
+      "amount": 8.11
     },
     {
       "from": "Jing",
@@ -54,7 +54,8 @@
       "category": "UNCATEGORIZED",
       "paidBy": "hongye",
       "amount": 0.01,
-      "currency": "EUR"
+      "currency": "EUR",
+      "kind": "expense"
     },
     {
       "date": "2026-08-31",
@@ -62,7 +63,8 @@
       "category": "UNCATEGORIZED",
       "paidBy": "Ferran Salvatella",
       "amount": 0.95,
-      "currency": "EUR"
+      "currency": "EUR",
+      "kind": "expense"
     },
     {
       "date": "2026-08-30",
@@ -70,7 +72,8 @@
       "category": "UNCATEGORIZED",
       "paidBy": "Ferran Salvatella",
       "amount": 64,
-      "currency": "EUR"
+      "currency": "EUR",
+      "kind": "expense"
     },
     {
       "date": "2026-08-26",
@@ -78,7 +81,8 @@
       "category": "FOOD_AND_DRINK",
       "paidBy": "Miel",
       "amount": 8.35,
-      "currency": "EUR"
+      "currency": "EUR",
+      "kind": "expense"
     },
     {
       "date": "2026-08-25",
@@ -86,7 +90,30 @@
       "category": "UNCATEGORIZED",
       "paidBy": "Ferran Salvatella",
       "amount": 3.5,
-      "currency": "EUR"
+      "currency": "EUR",
+      "kind": "expense"
+    }
+  ],
+  "transfers": [
+    {
+      "date": "2026-09-05",
+      "title": "Sushi",
+      "category": "UNCATEGORIZED",
+      "paidBy": "Miel",
+      "amount": 26,
+      "currency": "EUR",
+      "from": "Miel",
+      "to": "Ferran Salvatella"
+    },
+    {
+      "date": "2026-08-30",
+      "title": "Reembolsos",
+      "category": "UNCATEGORIZED",
+      "paidBy": "Ferran Salvatella",
+      "amount": 4.2,
+      "currency": "EUR",
+      "from": "Ferran Salvatella",
+      "to": "Miel"
     }
   ],
   "total": 76.81
