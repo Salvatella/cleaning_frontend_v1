@@ -16,13 +16,28 @@ import { statusForWeek, weekKey } from './schedule.js';
 const MESES = ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
   'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
-/** "2026-08" → el mes al que pertenece cada semana, por su lunes. */
+/**
+ * Las semanas que pertenecen a un mes.
+ *
+ * Una semana cae a caballo entre dos meses, así que hay que decidir a cuál
+ * cuenta. Usamos la convención ISO: **la semana pertenece al mes de su
+ * jueves**, el día del medio. Es decir, al mes donde caen la mayoría de sus
+ * días.
+ *
+ * Antes se usaba el lunes, y daba resultados que chirriaban: la semana del
+ * 31 de agosto al 6 de septiembre contaba como agosto entera, aunque seis de
+ * sus siete días fueran de septiembre. Quien limpiara ese fin de semana veía
+ * su trabajo en el mes equivocado.
+ *
+ * Cada semana tiene exactamente un jueves, así que el reparto es limpio: sin
+ * semanas repetidas en dos meses ni semanas que se pierdan.
+ */
 export function weeksOfMonth(month) {
   const [year, mon] = month.split('-').map(Number);
   const keys = [];
   const d = new Date(year, mon - 1, 1);
   while (d.getMonth() === mon - 1) {
-    if (d.getDay() === 1) keys.push(weekKey(d)); // lunes
+    if (d.getDay() === 4) keys.push(weekKey(d)); // jueves
     d.setDate(d.getDate() + 1);
   }
   return keys;
