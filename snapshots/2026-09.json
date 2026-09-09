@@ -1,7 +1,7 @@
 {
   "month": "2026-09",
   "title": "Dashboard de Septiembre 2026",
-  "generatedAt": "2026-09-09T14:28:50.616Z",
+  "generatedAt": "2026-09-09T14:29:32.366Z",
   "live": false,
   "people": [
     {
@@ -67,11 +67,11 @@
   },
   "stats": {
     "weeks": 4,
-    "total": 6,
-    "done": 0,
-    "pct": 0,
-    "turns": 2,
-    "turnsComplete": 0,
+    "total": 12,
+    "done": 3,
+    "pct": 25,
+    "turns": 4,
+    "turnsComplete": 1,
     "perPerson": [
       {
         "id": "ferran",
@@ -88,23 +88,23 @@
         "id": "jimmy",
         "name": "Jimmy",
         "color": "#eb6834",
-        "zones": 3,
+        "zones": 6,
         "done": 0,
         "onTime": 0,
         "pct": 0,
-        "turns": 1,
+        "turns": 2,
         "turnsComplete": 0
       },
       {
         "id": "mel",
         "name": "Miel",
         "color": "#f48fb1",
-        "zones": 0,
-        "done": 0,
-        "onTime": 0,
-        "pct": null,
-        "turns": 0,
-        "turnsComplete": 0
+        "zones": 3,
+        "done": 3,
+        "onTime": 3,
+        "pct": 100,
+        "turns": 1,
+        "turnsComplete": 1
       },
       {
         "id": "hongye",
@@ -119,6 +119,30 @@
       }
     ],
     "perWeek": [
+      {
+        "week": "2026-W36",
+        "total": 6,
+        "done": 3,
+        "pct": 50,
+        "turns": [
+          {
+            "assignee": "jimmy",
+            "label": "Primer turno",
+            "done": 0,
+            "total": 3
+          },
+          {
+            "assignee": "mel",
+            "label": "Segundo turno",
+            "done": 3,
+            "total": 3
+          }
+        ],
+        "resting": [
+          "ferran",
+          "hongye"
+        ]
+      },
       {
         "week": "2026-W37",
         "total": 6,
@@ -168,33 +192,20 @@
           "mel",
           "hongye"
         ]
-      },
-      {
-        "week": "2026-W40",
-        "total": 0,
-        "done": 0,
-        "pct": null,
-        "turns": [],
-        "resting": [
-          "ferran",
-          "jimmy",
-          "mel",
-          "hongye"
-        ]
       }
     ],
     "skippedZones": [
       {
         "zone": "Baño",
-        "count": 2
+        "count": 3
       },
       {
         "zone": "Cocina",
-        "count": 2
+        "count": 3
       },
       {
         "zone": "Salón y suelo",
-        "count": 2
+        "count": 3
       }
     ]
   },

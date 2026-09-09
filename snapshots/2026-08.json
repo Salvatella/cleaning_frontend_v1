@@ -1,7 +1,7 @@
 {
   "month": "2026-08",
   "title": "Dashboard de Agosto 2026",
-  "generatedAt": "2026-09-09T14:28:49.891Z",
+  "generatedAt": "2026-09-09T14:29:31.538Z",
   "live": false,
   "people": [
     {
@@ -66,12 +66,12 @@
     ]
   },
   "stats": {
-    "weeks": 5,
-    "total": 30,
-    "done": 3,
-    "pct": 10,
-    "turns": 10,
-    "turnsComplete": 1,
+    "weeks": 4,
+    "total": 24,
+    "done": 0,
+    "pct": 0,
+    "turns": 8,
+    "turnsComplete": 0,
     "perPerson": [
       {
         "id": "ferran",
@@ -88,23 +88,23 @@
         "id": "jimmy",
         "name": "Jimmy",
         "color": "#eb6834",
-        "zones": 9,
+        "zones": 6,
         "done": 0,
         "onTime": 0,
         "pct": 0,
-        "turns": 3,
+        "turns": 2,
         "turnsComplete": 0
       },
       {
         "id": "mel",
         "name": "Miel",
         "color": "#f48fb1",
-        "zones": 9,
-        "done": 3,
-        "onTime": 3,
-        "pct": 33,
-        "turns": 3,
-        "turnsComplete": 1
+        "zones": 6,
+        "done": 0,
+        "onTime": 0,
+        "pct": 0,
+        "turns": 2,
+        "turnsComplete": 0
       },
       {
         "id": "hongye",
@@ -214,44 +214,20 @@
           "ferran",
           "jimmy"
         ]
-      },
-      {
-        "week": "2026-W36",
-        "total": 6,
-        "done": 3,
-        "pct": 50,
-        "turns": [
-          {
-            "assignee": "jimmy",
-            "label": "Primer turno",
-            "done": 0,
-            "total": 3
-          },
-          {
-            "assignee": "mel",
-            "label": "Segundo turno",
-            "done": 3,
-            "total": 3
-          }
-        ],
-        "resting": [
-          "ferran",
-          "hongye"
-        ]
       }
     ],
     "skippedZones": [
       {
         "zone": "Baño",
-        "count": 9
+        "count": 8
       },
       {
         "zone": "Cocina",
-        "count": 9
+        "count": 8
       },
       {
         "zone": "Salón y suelo",
-        "count": 9
+        "count": 8
       }
     ]
   },
