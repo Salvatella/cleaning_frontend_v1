@@ -1,0 +1,103 @@
+name: Sincronizar y publicar
+
+# Un solo workflow para todo el ciclo:
+#   1. Lee los checks de Supabase y los gastos de Tricount  -> snapshots/
+#   2. Hace commit de snapshots/ si algo ha cambiado
+#   3. Compila el frontend y lo publica en GitHub Pages
+#
+# Sustituye a monthly.yml y a deploy.yml. Con dos workflows separados había un
+# problema silencioso: los commits que hace un workflow con GITHUB_TOKEN NO
+# disparan otros workflows, así que el commit de snapshots/ nunca relanzaba el
+# deploy y Pages se quedaba con los datos viejos. Juntándolo, el build usa los
+# snapshots recién generados que ya están en disco.
+
+on:
+  # Cada domingo a las 20:00 de Madrid. El cron de GitHub es SOLO UTC, así que
+  # hacen falta dos líneas para cubrir verano (CEST) e invierno (CET). En verano
+  # se lanzará también a las 21:00 locales: es inofensivo, el snapshot es
+  # idempotente y solo hace commit si el contenido cambia.
+  schedule:
+    - cron: '13 18 * * 0' # 20:00 Madrid en horario de verano
+    - cron: '13 19 * * 0' # 20:00 Madrid en horario de invierno
+
+  # Cada push a main: recompila y resincroniza.
+  push:
+    branches: [main]
+
+  # Y a mano desde la pestaña Actions.
+  workflow_dispatch:
+
+permissions:
+  contents: write # para hacer commit de snapshots/
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Refresca el mes anterior por si quedó algún check tardío. Sin Tricount:
+      # los gastos son un único fichero global y los baja el paso siguiente.
+      - name: Snapshot del mes anterior
+        run: |
+          ANTERIOR=$(date -u -d "$(date -u +%Y-%m-01) -1 day" +%Y-%m)
+          echo "Regenerando $ANTERIOR"
+          npm run snapshot -- --month "$ANTERIOR" --no-tricount
+
+      # El mes en curso, este sí con la sincronización de Tricount.
+      - name: Snapshot del mes en curso + Tricount
+        env:
+          TRICOUNT_URL: ${{ secrets.TRICOUNT_URL }}
+        run: npm run snapshot -- --this-month
+
+      - name: Commit si ha cambiado algo
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add snapshots/
+          if git diff --staged --quiet; then
+            echo "Sin cambios en snapshots/"
+          else
+            git commit -m "chore(snapshots): sincronización automática"
+            git push
+          fi
+
+      - run: npm run build
+
+      # Monta el sitio: web/dist en la raíz y snapshots/ al lado de index.html
+      # (la app los pide como 'snapshots/xxxx.json').
+      - name: Ensamblar el sitio
+        run: |
+          mkdir -p _site
+          cp -r web/dist/. _site/
+          if [ -d snapshots ]; then
+            mkdir -p _site/snapshots
+            cp -r snapshots/. _site/snapshots/
+          fi
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: sincronizar
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
