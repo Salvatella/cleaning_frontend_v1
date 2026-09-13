@@ -1,7 +1,7 @@
 {
   "month": "2026-09",
   "title": "Dashboard de Septiembre 2026",
-  "generatedAt": "2026-09-09T15:35:17.356Z",
+  "generatedAt": "2026-09-13T20:48:52.007Z",
   "live": false,
   "people": [
     {
@@ -68,8 +68,8 @@
   "stats": {
     "weeks": 4,
     "total": 12,
-    "done": 3,
-    "pct": 25,
+    "done": 5,
+    "pct": 42,
     "turns": 4,
     "turnsComplete": 1,
     "perPerson": [
@@ -78,9 +78,9 @@
         "name": "Ferran",
         "color": "#2a78d6",
         "zones": 3,
-        "done": 0,
-        "onTime": 0,
-        "pct": 0,
+        "done": 2,
+        "onTime": 2,
+        "pct": 67,
         "turns": 1,
         "turnsComplete": 0
       },
@@ -146,13 +146,13 @@
       {
         "week": "2026-W37",
         "total": 6,
-        "done": 0,
-        "pct": 0,
+        "done": 2,
+        "pct": 33,
         "turns": [
           {
             "assignee": "ferran",
             "label": "Primer turno",
-            "done": 0,
+            "done": 2,
             "total": 3
           },
           {
@@ -196,37 +196,47 @@
     ],
     "skippedZones": [
       {
-        "zone": "Baño",
-        "count": 3
-      },
-      {
         "zone": "Cocina",
         "count": 3
       },
       {
+        "zone": "Baño",
+        "count": 2
+      },
+      {
         "zone": "Salón y suelo",
-        "count": 3
+        "count": 2
       }
     ]
   },
   "tricount": {
     "title": "Piso Pratsss",
     "currency": "EUR",
-    "syncedAt": "2026-09-09T15:35:17.347Z",
-    "monthTotal": 0,
-    "monthExpenses": [],
+    "syncedAt": "2026-09-13T20:48:51.999Z",
+    "monthTotal": 4.8,
+    "monthExpenses": [
+      {
+        "date": "2026-09-11",
+        "title": "Papel",
+        "category": "UNCATEGORIZED",
+        "paidBy": "Ferran Salvatella",
+        "amount": 4.8,
+        "currency": "EUR",
+        "kind": "expense"
+      }
+    ],
     "overallBalances": [
       {
         "person": "Ferran Salvatella",
-        "paid": 72.65,
-        "share": 64.24,
-        "amount": 8.41
+        "paid": 77.45,
+        "share": 66.64,
+        "amount": 10.81
       },
       {
         "person": "Miel",
         "paid": 34.35,
-        "share": 42.46,
-        "amount": -8.11
+        "share": 44.86,
+        "amount": -10.51
       },
       {
         "person": "Jing",
@@ -241,6 +251,6 @@
         "amount": 0.01
       }
     ],
-    "overallTotal": 76.81
+    "overallTotal": 81.61
   }
 }
