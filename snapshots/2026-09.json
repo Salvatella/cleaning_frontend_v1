@@ -1,7 +1,7 @@
 {
   "month": "2026-09",
   "title": "Dashboard de Septiembre 2026",
-  "generatedAt": "2026-09-13T21:24:45.950Z",
+  "generatedAt": "2026-09-20T20:48:03.303Z",
   "live": false,
   "people": [
     {
@@ -67,21 +67,21 @@
   },
   "stats": {
     "weeks": 4,
-    "total": 12,
+    "total": 18,
     "done": 5,
-    "pct": 42,
-    "turns": 4,
+    "pct": 28,
+    "turns": 6,
     "turnsComplete": 1,
     "perPerson": [
       {
         "id": "ferran",
         "name": "Ferran",
         "color": "#2a78d6",
-        "zones": 3,
+        "zones": 6,
         "done": 2,
         "onTime": 2,
-        "pct": 67,
-        "turns": 1,
+        "pct": 33,
+        "turns": 2,
         "turnsComplete": 0
       },
       {
@@ -110,11 +110,11 @@
         "id": "hongye",
         "name": "HongYe",
         "color": "#4a3aa7",
-        "zones": 0,
+        "zones": 3,
         "done": 0,
         "onTime": 0,
-        "pct": null,
-        "turns": 0,
+        "pct": 0,
+        "turns": 1,
         "turnsComplete": 0
       }
     ],
@@ -169,15 +169,26 @@
       },
       {
         "week": "2026-W38",
-        "total": 0,
+        "total": 6,
         "done": 0,
-        "pct": null,
-        "turns": [],
+        "pct": 0,
+        "turns": [
+          {
+            "assignee": "hongye",
+            "label": "Primer turno",
+            "done": 0,
+            "total": 3
+          },
+          {
+            "assignee": "ferran",
+            "label": "Segundo turno",
+            "done": 0,
+            "total": 3
+          }
+        ],
         "resting": [
-          "ferran",
           "jimmy",
-          "mel",
-          "hongye"
+          "mel"
         ]
       },
       {
@@ -197,24 +208,33 @@
     "skippedZones": [
       {
         "zone": "Cocina",
-        "count": 3
+        "count": 5
       },
       {
         "zone": "Baño",
-        "count": 2
+        "count": 4
       },
       {
         "zone": "Salón y suelo",
-        "count": 2
+        "count": 4
       }
     ]
   },
   "tricount": {
     "title": "Piso Pratsss",
     "currency": "EUR",
-    "syncedAt": "2026-09-13T21:24:45.943Z",
-    "monthTotal": 4.8,
+    "syncedAt": "2026-09-20T20:48:03.297Z",
+    "monthTotal": 8.15,
     "monthExpenses": [
+      {
+        "date": "2026-09-11",
+        "title": "Cafe",
+        "category": "UNCATEGORIZED",
+        "paidBy": "Ferran Salvatella",
+        "amount": 3.35,
+        "currency": "EUR",
+        "kind": "expense"
+      },
       {
         "date": "2026-09-11",
         "title": "Papel",
@@ -228,15 +248,15 @@
     "overallBalances": [
       {
         "person": "Ferran Salvatella",
-        "paid": 77.45,
-        "share": 66.64,
-        "amount": 10.81
+        "paid": 80.8,
+        "share": 68.31,
+        "amount": 12.49
       },
       {
         "person": "Miel",
         "paid": 34.35,
-        "share": 44.86,
-        "amount": -10.51
+        "share": 46.54,
+        "amount": -12.19
       },
       {
         "person": "Jing",
@@ -251,6 +271,6 @@
         "amount": 0.01
       }
     ],
-    "overallTotal": 81.61
+    "overallTotal": 84.96
   }
 }

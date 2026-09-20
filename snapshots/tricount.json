@@ -2,20 +2,20 @@
   "url": "",
   "title": "Piso Pratsss",
   "currency": "EUR",
-  "lastSync": "2026-09-13T21:24:45.943Z",
+  "lastSync": "2026-09-20T20:48:03.297Z",
   "status": "ok",
   "balances": [
     {
       "person": "Ferran Salvatella",
-      "paid": 77.45,
-      "share": 66.64,
-      "amount": 10.81
+      "paid": 80.8,
+      "share": 68.31,
+      "amount": 12.49
     },
     {
       "person": "Miel",
       "paid": 34.35,
-      "share": 44.86,
-      "amount": -10.51
+      "share": 46.54,
+      "amount": -12.19
     },
     {
       "person": "Jing",
@@ -34,7 +34,7 @@
     {
       "from": "Miel",
       "to": "Ferran Salvatella",
-      "amount": 10.51
+      "amount": 12.19
     },
     {
       "from": "Jing",
@@ -48,6 +48,15 @@
     }
   ],
   "expenses": [
+    {
+      "date": "2026-09-11",
+      "title": "Cafe",
+      "category": "UNCATEGORIZED",
+      "paidBy": "Ferran Salvatella",
+      "amount": 3.35,
+      "currency": "EUR",
+      "kind": "expense"
+    },
     {
       "date": "2026-09-11",
       "title": "Papel",
@@ -125,5 +134,5 @@
       "to": "Miel"
     }
   ],
-  "total": 81.61
+  "total": 84.96
 }
