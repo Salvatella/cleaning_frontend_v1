@@ -1,7 +1,7 @@
 {
   "month": "2026-10",
   "title": "Dashboard de Octubre 2026",
-  "generatedAt": "2026-10-04T22:18:54.836Z",
+  "generatedAt": "2026-10-11T21:57:10.607Z",
   "live": false,
   "people": [
     {
@@ -67,32 +67,32 @@
   },
   "stats": {
     "weeks": 5,
-    "total": 6,
+    "total": 12,
     "done": 3,
-    "pct": 50,
-    "turns": 2,
+    "pct": 25,
+    "turns": 4,
     "turnsComplete": 0,
     "perPerson": [
       {
         "id": "ferran",
         "name": "Ferran",
         "color": "#2a78d6",
-        "zones": 0,
+        "zones": 3,
         "done": 0,
         "onTime": 0,
-        "pct": null,
-        "turns": 0,
+        "pct": 0,
+        "turns": 1,
         "turnsComplete": 0
       },
       {
         "id": "jimmy",
         "name": "Jimmy",
         "color": "#eb6834",
-        "zones": 3,
+        "zones": 6,
         "done": 2,
         "onTime": 0,
         "pct": 0,
-        "turns": 1,
+        "turns": 2,
         "turnsComplete": 0
       },
       {
@@ -145,13 +145,24 @@
       },
       {
         "week": "2026-W41",
-        "total": 0,
+        "total": 6,
         "done": 0,
-        "pct": null,
-        "turns": [],
+        "pct": 0,
+        "turns": [
+          {
+            "assignee": "ferran",
+            "label": "Primer turno",
+            "done": 0,
+            "total": 3
+          },
+          {
+            "assignee": "jimmy",
+            "label": "Segundo turno",
+            "done": 0,
+            "total": 3
+          }
+        ],
         "resting": [
-          "ferran",
-          "jimmy",
           "mel",
           "hongye"
         ]
@@ -199,18 +210,22 @@
     "skippedZones": [
       {
         "zone": "Cocina",
-        "count": 2
+        "count": 4
       },
       {
         "zone": "Salón y suelo",
-        "count": 1
+        "count": 3
+      },
+      {
+        "zone": "Baño",
+        "count": 2
       }
     ]
   },
   "tricount": {
     "title": "Piso Pratsss",
     "currency": "EUR",
-    "syncedAt": "2026-10-04T22:18:54.827Z",
+    "syncedAt": "2026-10-11T21:57:10.601Z",
     "monthTotal": 0,
     "monthExpenses": [],
     "overallBalances": [
